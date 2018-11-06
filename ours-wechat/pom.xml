@@ -11,5 +11,18 @@
 
     <artifactId>ours-wechat</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.ours</groupId>
+            <artifactId>ours-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ours</groupId>
+            <artifactId>ours-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

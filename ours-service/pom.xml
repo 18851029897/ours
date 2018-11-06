@@ -11,5 +11,12 @@
 
     <artifactId>ours-service</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.ours</groupId>
+            <artifactId>ours-dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
