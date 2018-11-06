@@ -28,7 +28,7 @@ public class BaseSysParamService implements IBaseSysParamService {
         String value = this.redisService.get(key);
         if (EmptyUtil.isEmpty(value)) {
             value = this.baseSysParamMapper.findValueByKey(params).getParamValue();
-            this.redisService.set(key, RedisConstant.TIME_OUT, params.getParamValue());
+            this.redisService.set(key, RedisConstant.TIME_OUT, value);
         }
         return value;
     }

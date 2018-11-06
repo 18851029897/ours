@@ -1,10 +1,13 @@
 package com.ours.login;
 
 import com.ours.common.back.DataResponse;
+import com.ours.common.util.EmptyUtil;
 import com.ours.common.util.HttpsUtil;
 import com.ours.common.util.MappingUtil;
 import com.ours.model.base.BaseSysParam;
 import com.ours.service.base.IBaseSysParamService;
+import com.ours.service.user.IUserInfoService;
+import com.rabbitmq.http.client.domain.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,15 +22,27 @@ public class LoginController {
     @Autowired
     private IBaseSysParamService baseSysParamService;
 
+    @Autowired
+    private IUserInfoService userInfoService;
+
     public static void main(String args[]) {
 
         System.out.println(MappingUtil.getResultsStr(BaseSysParam.class));
 
     }
 
+    /**
+     * 微信小程序登录
+     *
+     * @param code
+     * @return
+     */
     @RequestMapping("login")
     @ResponseBody
     public DataResponse login(String code) {
+        if (EmptyUtil.isEmpty(code)) {
+            return new DataResponse(1001, "参数缺失. code");
+        }
         BaseSysParam param = new BaseSysParam();
         param.setParamKey("WX_APP_ID");
         String appId = this.baseSysParamService.findValueByKey(param);
@@ -38,5 +53,18 @@ public class LoginController {
         String response = HttpsUtil.get(url);
         return new DataResponse(1000, "success", response);
     }
+
+    /**
+     * 保存小程序用户信息
+     *
+     * @return
+     */
+    @RequestMapping("saveUserInfo")
+    @ResponseBody
+    public DataResponse saveUserInfo(UserInfo params) {
+        this.userInfoService.saveUserInfo(params);
+        return new DataResponse(1000, "success");
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.ours.model.base;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "base_sys_param")
-public class BaseSysParam {
+public class BaseSysParam implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
