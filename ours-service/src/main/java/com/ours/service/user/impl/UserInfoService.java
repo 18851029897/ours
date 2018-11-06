@@ -1,8 +1,8 @@
 package com.ours.service.user.impl;
 
 import com.ours.dao.user.UserInfoMapper;
+import com.ours.model.user.UserInfo;
 import com.ours.service.user.IUserInfoService;
-import com.rabbitmq.http.client.domain.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

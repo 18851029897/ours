@@ -1,7 +1,7 @@
 package com.ours.dao.user;
 
 import com.ours.dao.sql.SqlProvider;
-import com.rabbitmq.http.client.domain.UserInfo;
+import com.ours.model.user.UserInfo;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
