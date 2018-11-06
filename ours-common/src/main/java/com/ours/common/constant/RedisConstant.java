@@ -1,7 +1,7 @@
 package com.ours.common.constant;
 
 /**
- * Created by fishs on 2018/10/31.
+ * Created by fish on 2018/10/31.
  */
 public class RedisConstant {
 
