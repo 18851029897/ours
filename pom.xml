@@ -14,7 +14,9 @@
     </properties>
 
     <modules>
+        <module>ours-common</module>
         <module>ours-dao</module>
+        <module>ours-model</module>
         <module>ours-service</module>
         <module>ours-wechat</module>
     </modules>
