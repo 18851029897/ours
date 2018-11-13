@@ -19,11 +19,11 @@ public class GroupTagService implements IGroupTagService {
 
     @Override
     public int saveGroupTag(GroupTag params) {
-        return 0;
+        return this.groupTagMapper.saveGroupTag(params);
     }
 
     @Override
     public List<GroupTag> findGroupTagList(GroupTag params) {
-        return null;
+        return this.groupTagMapper.findGroupTagList(params);
     }
 }

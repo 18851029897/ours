@@ -19,11 +19,11 @@ public class GroupMemberService implements IGroupMemberService {
 
     @Override
     public List<GroupMember> findGroupMemberList(GroupMember params) {
-        return null;
+        return this.groupMemberMapper.findGroupMemberList(params);
     }
 
     @Override
     public int saveGroupMember(GroupMember params) {
-        return 0;
+        return this.groupMemberMapper.saveGroupMember(params);
     }
 }
