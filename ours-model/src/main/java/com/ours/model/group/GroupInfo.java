@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by fish on 2018/11/12.
  */
 @Entity
-@Table(name = "base_sys_param")
+@Table(name = "group_info")
 public class GroupInfo implements Serializable {
 
     @Id
