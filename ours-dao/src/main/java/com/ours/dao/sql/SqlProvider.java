@@ -3,6 +3,7 @@ package com.ours.dao.sql;
 import com.ours.common.util.EmptyUtil;
 import com.ours.model.base.BaseSysParam;
 import com.ours.model.group.GroupInfo;
+import com.ours.model.group.GroupMember;
 import com.ours.model.group.GroupTag;
 import com.ours.model.user.UserInfo;
 import org.apache.ibatis.jdbc.SQL;
@@ -213,6 +214,58 @@ public class SqlProvider {
             }
             if (EmptyUtil.isNotEmpty(params.getTagType())) {
                 VALUES("tag_type", "#{tagType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 查询成员列表
+     *
+     * @param params
+     * @return
+     */
+    public String findGroupMemberList(GroupMember params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("group_member");
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                WHERE("GROUP_ID=#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                WHERE("USER_ID=#{userId}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 保存成员
+     *
+     * @param params
+     * @return
+     */
+    public String saveGroupMember(GroupMember params) {
+        String sql = new SQL() {{
+            INSERT_INTO("group_member");
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                VALUES("group_id", "#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                VALUES("user_id", "#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getMemberIdentity())) {
+                VALUES("member_identity", "#{memberIdentity}");
             }
             if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
                 VALUES("create_time", "#{createTime}");
