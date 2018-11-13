@@ -3,13 +3,18 @@ package com.ours.dao.sql;
 import com.ours.common.util.EmptyUtil;
 import com.ours.model.base.BaseSysParam;
 import com.ours.model.group.GroupInfo;
+import com.ours.model.group.GroupTag;
 import com.ours.model.user.UserInfo;
 import org.apache.ibatis.jdbc.SQL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by fish on 2018/10/29.
  */
 public class SqlProvider {
+
+    private static Logger baseLog = LoggerFactory.getLogger(SqlProvider.class);
 
     /**
      * 基础参数表
@@ -25,7 +30,7 @@ public class SqlProvider {
                 WHERE("PARAM_KEY=#{paramKey}");
             }
         }}.toString();
-        System.out.println(sql);
+        baseLog.info(sql);
         return sql;
     }
 
@@ -37,7 +42,8 @@ public class SqlProvider {
      * @return
      */
     public String saveUserInfo(UserInfo params) {
-        return new SQL() {
+
+        String sql = new SQL() {
             {
                 INSERT_INTO("user_info");
                 if (EmptyUtil.isNotEmpty(params.getNickName())) {
@@ -84,9 +90,17 @@ public class SqlProvider {
                 }
             }
         }.toString();
+        baseLog.info(sql);
+        return sql;
     }
 
 
+    /**
+     * 查询圈子列表
+     *
+     * @param params
+     * @return
+     */
     public String findGroupInfoList(GroupInfo params) {
         String sql = new SQL() {{
             SELECT("*");
@@ -99,12 +113,18 @@ public class SqlProvider {
             }
             WHERE("IS_DEL=0");
         }}.toString();
-        System.out.println(sql);
+        baseLog.info(sql);
         return sql;
     }
 
+    /**
+     * 保存圈子
+     *
+     * @param params
+     * @return
+     */
     public String saveGroupInfo(GroupInfo params) {
-        return new SQL() {
+        String sql = new SQL() {
             {
                 INSERT_INTO("group_info");
                 if (EmptyUtil.isNotEmpty(params.getGroupName())) {
@@ -139,6 +159,67 @@ public class SqlProvider {
                 }
             }
         }.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 查询标签列表
+     *
+     * @param params
+     * @return
+     */
+    public String findGroupTagList(GroupTag params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("group_tag");
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                WHERE("GROUP_ID=#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                WHERE("USER_ID=#{userId}");
+            }
+            WHERE("IS_DEL=0");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 保存标签
+     *
+     * @param params
+     * @return
+     */
+    public String saveGroupTag(GroupTag params) {
+        String sql = new SQL() {{
+            INSERT_INTO("group_tag");
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                VALUES("group_id", "#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                VALUES("user_id", "#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTagName())) {
+                VALUES("tag_name", "#{tagName}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getSort())) {
+                VALUES("sort", "#{sort}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTagType())) {
+                VALUES("tag_type", "#{tagType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
     }
 
 }
