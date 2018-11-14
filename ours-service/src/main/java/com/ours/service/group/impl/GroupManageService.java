@@ -82,6 +82,6 @@ public class GroupManageService implements IGroupManageService {
         member.setCreateTime(new Date());
         this.groupMemberService.saveGroupMember(member);
 
-        return new DataResponse(1000, "success");
+        return new DataResponse(1000, "success", params);
     }
 }
