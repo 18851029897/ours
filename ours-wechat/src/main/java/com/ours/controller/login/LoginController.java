@@ -13,6 +13,7 @@ import com.ours.service.base.IBaseSysParamService;
 import com.ours.service.user.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,7 +41,7 @@ public class LoginController {
      * @param code
      * @return
      */
-    @RequestMapping("login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public DataResponse login(String code) {
         if (EmptyUtil.isEmpty(code)) {
@@ -62,7 +63,7 @@ public class LoginController {
      *
      * @return
      */
-    @RequestMapping("saveUserInfo")
+    @RequestMapping(value = "/saveUserInfo", method = RequestMethod.POST)
     @ResponseBody
     public DataResponse saveUserInfo(UserInfo params) {
         this.userInfoService.saveUserInfo(params);
@@ -72,7 +73,7 @@ public class LoginController {
 
     @RequestMapping("test")
     @ResponseBody
-    public DataResponse test(){
+    public DataResponse test() {
         BaseSysParam params = new BaseSysParam();
         params.setParamKey("image.small.width");
         this.baseSysParamService.findValueByKey(params);
