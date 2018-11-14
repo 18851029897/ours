@@ -11,6 +11,8 @@ public class UserGroupVO {
 
     private Integer sort;
 
+    private Integer groupId;
+
     public Integer getId() {
         return id;
     }
@@ -33,5 +35,13 @@ public class UserGroupVO {
 
     public void setSort(Integer sort) {
         this.sort = sort;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 }

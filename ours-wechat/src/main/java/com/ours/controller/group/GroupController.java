@@ -103,6 +103,7 @@ public class GroupController {
             record.setId(userGroups.get(i).getId());
             record.setName(bean.getGroupName());
             record.setSort(userGroups.get(i).getSort());
+            record.setGroupId(userGroups.get(i).getGroupId());
             data.add(record);
         }
         return new DataResponse(1000, "success", data);
@@ -119,7 +120,7 @@ public class GroupController {
     @ResponseBody
     public DataResponse updateUserGroup(UserGroup params) {
         this.userGroupService.updateUserGroup(params);
-        return new DataResponse(1000, "success");
+        return new DataResponse(1000, "success", params);
     }
 
 
@@ -138,6 +139,7 @@ public class GroupController {
             GroupMemberVO record = new GroupMemberVO();
             UserInfo userInfo = this.userInfoService.findUserInfo(new UserInfo(data.get(i).getUserId()));
             List<GroupTag> tags = this.groupTagService.findGroupTagList(new GroupTag(data.get(i).getGroupId(), data.get(i).getUserId()));
+            record.setId(data.get(i).getId());
             record.setPhoto(userInfo.getHeadImgUrl());
             record.setName(userInfo.getNickName());
             record.setIdentity(data.get(i).getMemberIdentity());
