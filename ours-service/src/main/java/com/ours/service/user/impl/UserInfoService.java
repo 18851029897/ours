@@ -19,4 +19,9 @@ public class UserInfoService implements IUserInfoService {
     public int saveUserInfo(UserInfo params) {
         return this.userInfoMapper.saveUserInfo(params);
     }
+
+    @Override
+    public UserInfo findUserInfo(UserInfo params) {
+        return this.userInfoMapper.findUserInfo(params);
+    }
 }

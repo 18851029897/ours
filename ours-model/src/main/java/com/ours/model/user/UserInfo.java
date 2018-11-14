@@ -43,6 +43,14 @@ public class UserInfo {
 
     private Date createTime;
 
+    public UserInfo() {
+
+    }
+
+    public UserInfo(Integer userId) {
+        this.userId = userId;
+    }
+
     public Integer getUserId() {
         return userId;
     }

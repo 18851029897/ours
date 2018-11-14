@@ -18,6 +18,15 @@ public class GroupTag {
     private Integer userId;
     private Integer tagType;
 
+    public GroupTag() {
+
+    }
+
+    public GroupTag(Integer groupId, Integer userId) {
+        this.groupId = groupId;
+        this.userId = userId;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

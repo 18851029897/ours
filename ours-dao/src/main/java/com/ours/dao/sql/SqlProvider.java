@@ -5,6 +5,7 @@ import com.ours.model.base.BaseSysParam;
 import com.ours.model.group.GroupInfo;
 import com.ours.model.group.GroupMember;
 import com.ours.model.group.GroupTag;
+import com.ours.model.user.UserGroup;
 import com.ours.model.user.UserInfo;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
@@ -43,7 +44,6 @@ public class SqlProvider {
      * @return
      */
     public String saveUserInfo(UserInfo params) {
-
         String sql = new SQL() {
             {
                 INSERT_INTO("user_info");
@@ -95,6 +95,100 @@ public class SqlProvider {
         return sql;
     }
 
+    /**
+     * 查询用户信息
+     *
+     * @param params
+     * @return
+     */
+    public String findUserInfo(UserInfo params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("user_info");
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                WHERE("USER_ID=#{userId}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 查询用户的圈子列表
+     *
+     * @param params
+     * @return
+     */
+
+    public String findUserGroupList(UserGroup params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("user_group");
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                WHERE("GROUP_ID=#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                WHERE("USER_ID=#{userId}");
+            }
+            ORDER_BY("SORT DESC");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+
+    }
+
+    /**
+     * 保存用户的圈子
+     *
+     * @param params
+     * @return
+     */
+    public String saveUserGroup(UserGroup params) {
+        String sql = new SQL() {{
+            INSERT_INTO("user_group");
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                VALUES("group_id", "#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                VALUES("user_id", "#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getSort())) {
+                VALUES("sort", "#{sort}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                VALUES("modify_time", "#{modifyTime}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 更新用户圈子
+     *
+     * @param params
+     * @return
+     */
+    public String updateUserGroup(UserGroup params) {
+        String sql = new SQL() {{
+            UPDATE("user_group");
+            if (EmptyUtil.isNotEmpty(params.getSort())) {
+                SET("SORT=#{sort}");
+            }
+            WHERE("ID=#{id}");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
 
     /**
      * 查询圈子列表
@@ -102,6 +196,7 @@ public class SqlProvider {
      * @param params
      * @return
      */
+
     public String findGroupInfoList(GroupInfo params) {
         String sql = new SQL() {{
             SELECT("*");
@@ -243,6 +338,7 @@ public class SqlProvider {
             if (EmptyUtil.isNotEmpty(params.getUserId())) {
                 WHERE("USER_ID=#{userId}");
             }
+            ORDER_BY("CREATE_TIME ASC");
         }}.toString();
         baseLog.info(sql);
         return sql;

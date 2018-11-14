@@ -7,6 +7,7 @@ import com.ours.common.util.MappingUtil;
 import com.ours.model.base.BaseSysParam;
 import com.ours.model.group.GroupInfo;
 import com.ours.model.group.GroupTag;
+import com.ours.model.user.UserGroup;
 import com.ours.model.user.UserInfo;
 import com.ours.service.base.IBaseSysParamService;
 import com.ours.service.user.IUserInfoService;
@@ -29,7 +30,7 @@ public class LoginController {
 
     public static void main(String args[]) {
 
-        System.out.println(MappingUtil.getResultsStr(GroupTag.class));
+        System.out.println(MappingUtil.getResultsStr(UserInfo.class));
 
     }
 

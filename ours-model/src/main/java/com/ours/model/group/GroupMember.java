@@ -87,7 +87,8 @@ public class GroupMember {
         if (groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
-        if (memberIdentity != null ? !memberIdentity.equals(that.memberIdentity) : that.memberIdentity != null) return false;
+        if (memberIdentity != null ? !memberIdentity.equals(that.memberIdentity) : that.memberIdentity != null)
+            return false;
         if (memberStatus != null ? !memberStatus.equals(that.memberStatus) : that.memberStatus != null) return false;
 
         return true;
@@ -102,5 +103,12 @@ public class GroupMember {
         result = 31 * result + (memberIdentity != null ? memberIdentity.hashCode() : 0);
         result = 31 * result + (memberStatus != null ? memberStatus.hashCode() : 0);
         return result;
+    }
+
+    public GroupMember() {
+    }
+
+    public GroupMember(Integer id) {
+        this.id = id;
     }
 }

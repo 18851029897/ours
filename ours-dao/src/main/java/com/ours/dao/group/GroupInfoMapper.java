@@ -13,8 +13,8 @@ import java.util.List;
 public interface GroupInfoMapper {
 
     @InsertProvider(type = SqlProvider.class, method = "saveGroupInfo")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    int saveGroupInfo(GroupInfo params);
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    Integer saveGroupInfo(GroupInfo params);
 
 
     @SelectProvider(type = SqlProvider.class, method = "findGroupInfoList")
@@ -34,4 +34,21 @@ public interface GroupInfoMapper {
     })
     List<GroupInfo> findGroupInfoList(GroupInfo params);
 
+
+    @SelectProvider(type = SqlProvider.class, method = "findGroupInfoList")
+    @Results({
+            @Result(property = "id", column = "ID"),
+            @Result(property = "groupPhotoUrl", column = "GROUP_PHOTO_URL"),
+            @Result(property = "groupName", column = "GROUP_NAME"),
+            @Result(property = "groupTitle", column = "GROUP_TITLE"),
+            @Result(property = "groupDesc", column = "GROUP_DESC"),
+            @Result(property = "groupType", column = "GROUP_TYPE"),
+            @Result(property = "groupPrice", column = "GROUP_PRICE"),
+            @Result(property = "isDel", column = "IS_DEL"),
+            @Result(property = "validityDay", column = "VALIDITY_DAY"),
+            @Result(property = "freeDay", column = "FREE_DAY"),
+            @Result(property = "modifyTime", column = "MODIFY_TIME"),
+            @Result(property = "createTime", column = "CREATE_TIME"),
+    })
+    GroupInfo findGroupInfo(GroupInfo params);
 }

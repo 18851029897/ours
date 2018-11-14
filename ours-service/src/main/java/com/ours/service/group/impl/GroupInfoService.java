@@ -26,4 +26,9 @@ public class GroupInfoService implements IGroupInfoService {
     public List<GroupInfo> findGroupInfoList(GroupInfo params) {
         return this.groupInfoMapper.findGroupInfoList(params);
     }
+
+    @Override
+    public GroupInfo findGroupInfo(GroupInfo params) {
+        return this.groupInfoMapper.findGroupInfo(params);
+    }
 }

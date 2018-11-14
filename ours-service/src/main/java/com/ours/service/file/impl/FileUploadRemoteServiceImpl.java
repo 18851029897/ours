@@ -61,7 +61,7 @@ public class FileUploadRemoteServiceImpl implements IFileUploadRemoteService {
 
     public void init() {
         BaseSysParam params = new BaseSysParam();
-        params.setParamKey("image.dir");
+        params.setParamKey("IMAGE_DIR");
         this.imageDir = this.baseSysParamService.findValueByKey(params);
     }
 
