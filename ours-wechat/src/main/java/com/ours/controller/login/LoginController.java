@@ -71,9 +71,6 @@ public class LoginController {
     @RequestMapping("test")
     @ResponseBody
     public DataResponse test() {
-        BaseSysParam params = new BaseSysParam();
-        params.setParamKey("image.small.width");
-        this.baseSysParamService.findValueByKey(params);
         return new DataResponse(1000, "success");
     }
 
