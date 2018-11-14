@@ -29,14 +29,17 @@ public class BaseSysParamService implements IBaseSysParamService {
 
     @Override
     public String findValueByKey(BaseSysParam params) {
-        String key = RedisConstant.BASE_SYS_PARAM + "-" + params.getParamKey().toUpperCase();
-        baseLog.info("redis key is =" + key);
-        String value = this.redisService.get(key);
-        if (EmptyUtil.isEmpty(value)) {
-            value = this.baseSysParamMapper.findValueByKey(params).getParamValue();
-            this.redisService.set(key, RedisConstant.TIME_OUT, value);
-        }
-        baseLog.info("redis value is =" + value);
+//        String key = RedisConstant.BASE_SYS_PARAM + "-" + params.getParamKey().toUpperCase();
+//        baseLog.info("redis key is =" + key);
+//        String value = this.redisService.get(key);
+//        if (EmptyUtil.isEmpty(value)) {
+//            value = this.baseSysParamMapper.findValueByKey(params).getParamValue();
+//            this.redisService.set(key, RedisConstant.TIME_OUT, value);
+//        }
+//        baseLog.info("redis value is =" + value);
+
+        String value = this.baseSysParamMapper.findValueByKey(params).getParamValue();
+        baseLog.info("sytem value is = " + value);
         return value;
     }
 }
