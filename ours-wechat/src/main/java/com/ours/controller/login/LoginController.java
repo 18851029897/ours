@@ -64,7 +64,7 @@ public class LoginController {
     @ResponseBody
     public DataResponse saveUserInfo(UserInfo params) {
         this.userInfoService.saveUserInfo(params);
-        return new DataResponse(1000, "success");
+        return new DataResponse(1000, "success", params);
     }
 
 
