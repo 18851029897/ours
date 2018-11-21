@@ -10,6 +10,8 @@ public interface IUserInfoService {
 
     public int saveUserInfo(UserInfo params);
 
+    public int updateUserInfo(UserInfo params);
+
     public UserInfo findUserInfo(UserInfo params);
 
 }

@@ -1,6 +1,7 @@
 package com.ours.dao.user;
 
 import com.ours.dao.sql.SqlProvider;
+import com.ours.model.user.UserGroup;
 import com.ours.model.user.UserInfo;
 import org.apache.ibatis.annotations.*;
 
@@ -16,12 +17,15 @@ public interface UserInfoMapper {
     @Options(useGeneratedKeys = true, keyProperty = "userId")
     int saveUserInfo(UserInfo params);
 
+    @UpdateProvider(type = SqlProvider.class, method = "updateUserInfo")
+    int updateUserInfo(UserInfo params);
+
     @SelectProvider(type = SqlProvider.class, method = "findUserInfo")
     @Results({
         @Result(property = "userId", column = "USER_ID"),
-        @Result(property = "openId", column = "OPEN_ID"),
+        @Result(property = "openId", column = "OPENID"),
         @Result(property = "sex", column = "SEX"),
-        @Result(property = "nickName", column = "NICK_NAME"),
+        @Result(property = "nickName", column = "NICKNAME"),
         @Result(property = "province", column = "PROVINCE"),
         @Result(property = "city", column = "CITY"),
         @Result(property = "country", column = "COUNTRY"),

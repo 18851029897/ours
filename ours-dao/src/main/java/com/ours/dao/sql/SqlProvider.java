@@ -95,6 +95,64 @@ public class SqlProvider {
         return sql;
     }
 
+
+    /**
+     * 更新用户信息
+     *
+     * @param params
+     * @return
+     */
+    public String updateUserInfo(UserInfo params) {
+        String sql = new SQL() {{
+            UPDATE("user_info");
+            if (EmptyUtil.isNotEmpty(params.getNickName())) {
+                SET("nickname=#{nickName}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getSex())) {
+                SET("sex=#{sex}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getProvince())) {
+                SET("province=#{province}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCity())) {
+                SET("city=#{city}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCountry())) {
+                SET("country=#{country}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUnionId())) {
+                SET("unionid=#{unionId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getPhone())) {
+                SET("phone=#{phone}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getHeadImgUrl())) {
+                SET("headimgurl=#{headImgUrl}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getSubscribe())) {
+                SET("subscribe=#{subscribe}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getPayAmount())) {
+                SET("pay_amount=#{payAmount}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getInviteUserId())) {
+                SET("invite_user_id=#{inviteUserId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                SET("modify_time=#{modifyTime}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                WHERE("USER_ID=#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getOpenId())) {
+                WHERE("OPENID=#{openId}");
+            }
+
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
     /**
      * 查询用户信息
      *
@@ -107,6 +165,9 @@ public class SqlProvider {
             FROM("user_info");
             if (EmptyUtil.isNotEmpty(params.getUserId())) {
                 WHERE("USER_ID=#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getOpenId())) {
+                WHERE("OPENID=#{openId}");
             }
         }}.toString();
         baseLog.info(sql);

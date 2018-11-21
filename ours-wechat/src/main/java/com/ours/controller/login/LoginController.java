@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * Created by fish on 2018/11/6.
  */
@@ -63,7 +65,17 @@ public class LoginController {
     @RequestMapping(value = "/saveUserInfo", method = RequestMethod.POST)
     @ResponseBody
     public DataResponse saveUserInfo(UserInfo params) {
-        this.userInfoService.saveUserInfo(params);
+        //根据openid排重
+        UserInfo isExist = this.userInfoService.findUserInfo(new UserInfo(params.getOpenId()));
+        //不存在就新增一条, 存在就更新
+        if (EmptyUtil.isEmpty(isExist)) {
+            params.setModifyTime(new Date());
+            params.setCreateTime(new Date());
+            this.userInfoService.saveUserInfo(params);
+        } else {
+            params.setModifyTime(new Date());
+            this.userInfoService.updateUserInfo(params);
+        }
         return new DataResponse(1000, "success", params);
     }
 

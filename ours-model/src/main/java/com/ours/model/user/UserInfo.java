@@ -47,6 +47,10 @@ public class UserInfo {
 
     }
 
+    public UserInfo(String openId) {
+        this.openId = openId;
+    }
+
     public UserInfo(Integer userId) {
         this.userId = userId;
     }
