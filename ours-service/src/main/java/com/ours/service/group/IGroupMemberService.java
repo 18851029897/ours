@@ -11,6 +11,10 @@ public interface IGroupMemberService {
 
     public List<GroupMember> findGroupMemberList(GroupMember params);
 
+    public GroupMember findGroupMember(GroupMember params);
+
     public int saveGroupMember(GroupMember params);
+
+    public int updateGroupMember(GroupMember params);
 
 }

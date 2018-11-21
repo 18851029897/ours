@@ -432,4 +432,70 @@ public class SqlProvider {
         return sql;
     }
 
+
+    /**
+     * 更新圈子信息
+     *
+     * @param params
+     * @return
+     */
+    public String updateGroupInfo(GroupInfo params) {
+        String sql = new SQL() {{
+            UPDATE("group_info");
+            if (EmptyUtil.isNotEmpty(params.getGroupName())) {
+                SET("group_name=#{groupName}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupTitle())) {
+                SET("group_title=#{groupTitle}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupPhotoUrl())) {
+                SET("group_photo_url=#{groupPhotoUrl}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupDesc())) {
+                SET("group_desc=#{groupDesc}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupType())) {
+                SET("group_type=#{groupType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupPrice())) {
+                SET("group_price=#{groupPrice}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getValidityDay())) {
+                SET("validity_day=#{validityDay}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getFreeDay())) {
+                SET("free_day=#{freeDay}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                SET("modify_time=#{modifyTime}");
+            }
+            WHERE("ID=#{id}");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 更新圈子信息
+     *
+     * @param params
+     * @return
+     */
+    public String updateGroupMember(GroupMember params) {
+        String sql = new SQL() {{
+            UPDATE("group_member");
+            if (EmptyUtil.isNotEmpty(params.getMemberIdentity())) {
+                SET("member_identity=#{memberIdentity}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getMemberStatus())) {
+                SET("member_status=#{memberStatus}");
+            }
+            WHERE("group_id=#{groupId} and user_id=#{userId}");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
 }
+
+

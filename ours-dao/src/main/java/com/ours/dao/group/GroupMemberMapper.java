@@ -24,8 +24,24 @@ public interface GroupMemberMapper {
     List<GroupMember> findGroupMemberList(GroupMember params);
 
 
+    @SelectProvider(type = SqlProvider.class, method = "findGroupMemberList")
+    @Results({
+            @Result(property = "id", column = "ID"),
+            @Result(property = "groupId", column = "GROUP_ID"),
+            @Result(property = "userId", column = "USER_ID"),
+            @Result(property = "createTime", column = "CREATE_TIME"),
+            @Result(property = "memberIdentity", column = "MEMBER_IDENTITY"),
+            @Result(property = "memberStatus", column = "MEMBER_STATUS"),
+    })
+    GroupMember findGroupMember(GroupMember params);
+
+
     @InsertProvider(type = SqlProvider.class, method = "saveGroupMember")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int saveGroupMember(GroupMember params);
+
+
+    @UpdateProvider(type = SqlProvider.class, method = "updateGroupMember")
+    int updateGroupMember(GroupMember params);
 
 }

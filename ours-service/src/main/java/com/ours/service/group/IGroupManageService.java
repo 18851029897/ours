@@ -13,4 +13,6 @@ public interface IGroupManageService {
 
     public DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) throws Exception;
 
+    public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) throws Exception;
+
 }

@@ -1,6 +1,7 @@
 package com.ours.controller.group;
 
 import com.ours.common.back.DataResponse;
+import com.ours.common.util.EmptyUtil;
 import com.ours.common.vo.group.GroupMemberVO;
 import com.ours.common.vo.user.UserGroupVO;
 import com.ours.model.group.GroupInfo;
@@ -71,6 +72,28 @@ public class GroupController {
         }
 
     }
+
+
+    /**
+     * 更新圈子
+     *
+     * @param params
+     * @param photo
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/updateGroupInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) {
+        try {
+            return this.groupManageService.updateGroupInfo(params, photo, userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataResponse(1001, e.getMessage());
+        }
+
+    }
+
 
     /**
      * 查询所有圈子
@@ -148,6 +171,52 @@ public class GroupController {
             result.add(record);
         }
         return new DataResponse(1000, "success", result);
+    }
+
+
+    /**
+     * 更新群成员
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/updateGroupMember", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResponse updateGroupMember(GroupMember params) {
+        this.groupMemberService.updateGroupMember(params);
+        return new DataResponse(1000, "success", params);
+    }
+
+
+    /**
+     * 设置标签
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/saveGroupTag", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResponse saveGroupTag(GroupTag params) {
+        this.groupTagService.saveGroupTag(params);
+        return new DataResponse(1000, "success", params);
+    }
+
+
+    /**
+     * 是否已在圈子
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/isInGroup", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse isInGroup(GroupMember params) {
+        GroupMember record = this.groupMemberService.findGroupMember(params);
+        if(EmptyUtil.isEmpty(record)){
+            return new DataResponse(1000, "success", 0);
+        }else{
+            return new DataResponse(1000, "success", 1);
+        }
     }
 
 

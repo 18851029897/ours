@@ -11,8 +11,10 @@ public interface IGroupInfoService {
 
     int saveGroupInfo(GroupInfo params);
 
+    int updateGroupInfo(GroupInfo params);
+
     List<GroupInfo> findGroupInfoList(GroupInfo params);
-    
+
     GroupInfo findGroupInfo(GroupInfo params);
 
 }

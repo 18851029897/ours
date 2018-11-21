@@ -23,7 +23,17 @@ public class GroupMemberService implements IGroupMemberService {
     }
 
     @Override
+    public GroupMember findGroupMember(GroupMember params) {
+        return this.groupMemberMapper.findGroupMember(params);
+    }
+
+    @Override
     public int saveGroupMember(GroupMember params) {
         return this.groupMemberMapper.saveGroupMember(params);
+    }
+
+    @Override
+    public int updateGroupMember(GroupMember params) {
+        return this.groupMemberMapper.updateGroupMember(params);
     }
 }

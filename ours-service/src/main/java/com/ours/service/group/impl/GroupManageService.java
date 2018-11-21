@@ -46,7 +46,7 @@ public class GroupManageService implements IGroupManageService {
     public DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) throws Exception {
         String url = "";
         if (EmptyUtil.isNotEmpty(photo)) {
-            baseLog.info("开始圈子头像.");
+            baseLog.info("开始上传圈子头像.");
             InputStream input = photo.getInputStream();
             int count = input.available();
             byte[] fileByte = new byte[count];
@@ -82,6 +82,31 @@ public class GroupManageService implements IGroupManageService {
         member.setCreateTime(new Date());
         this.groupMemberService.saveGroupMember(member);
 
+        return new DataResponse(1000, "success", params);
+    }
+
+    @Override
+    public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) throws Exception {
+        String url = "";
+        if (EmptyUtil.isNotEmpty(photo)) {
+            baseLog.info("开始上传圈子头像.");
+            InputStream input = photo.getInputStream();
+            int count = input.available();
+            byte[] fileByte = new byte[count];
+            input.read(fileByte);
+            String fileName = photo.getOriginalFilename();
+            baseLog.info("当前上传请求的file的文件名:" + fileName);
+            input.read(fileByte);
+            fileName = fileName.substring(fileName.lastIndexOf(".") + 1);
+            String fileId = this.fileUploadRemoteService.storeFile(fileByte, fileName);
+            url = fileId + "." + fileName;
+            baseLog.info("结束上传文件");
+            baseLog.info("上传后的文件名：" + url);
+        }
+        //1.圈子更新信息
+        params.setGroupPhotoUrl(url);
+        params.setModifyTime(new Date());
+        this.groupInfoService.updateGroupInfo(params);
         return new DataResponse(1000, "success", params);
     }
 }

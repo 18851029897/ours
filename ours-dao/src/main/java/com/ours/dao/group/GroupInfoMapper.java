@@ -16,6 +16,9 @@ public interface GroupInfoMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     Integer saveGroupInfo(GroupInfo params);
 
+    @UpdateProvider(type = SqlProvider.class, method = "updateGroupInfo")
+    Integer updateGroupInfo(GroupInfo params);
+
 
     @SelectProvider(type = SqlProvider.class, method = "findGroupInfoList")
     @Results({
