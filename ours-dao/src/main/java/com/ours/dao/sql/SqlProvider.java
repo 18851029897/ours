@@ -10,6 +10,7 @@ import com.ours.model.user.UserInfo;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Created by fish on 2018/10/29.
@@ -284,6 +285,9 @@ public class SqlProvider {
         String sql = new SQL() {
             {
                 INSERT_INTO("group_info");
+                if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                    VALUES("user_id", "#{userId}");
+                }
                 if (EmptyUtil.isNotEmpty(params.getGroupName())) {
                     VALUES("group_name", "#{groupName}");
                 }
@@ -390,6 +394,7 @@ public class SqlProvider {
         String sql = new SQL() {{
             SELECT("*");
             FROM("group_member");
+
             if (EmptyUtil.isNotEmpty(params.getId())) {
                 WHERE("ID=#{id}");
             }
@@ -399,8 +404,18 @@ public class SqlProvider {
             if (EmptyUtil.isNotEmpty(params.getUserId())) {
                 WHERE("USER_ID=#{userId}");
             }
+            if (EmptyUtil.isNotEmpty(params.getMemberIdentity())) {
+                WHERE("MEMBER_IDENTITY=#{memberIdentity}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getMemberStatus())) {
+                WHERE("MEMBER_STATUS=#{memberStatus}");
+            }
             ORDER_BY("CREATE_TIME ASC");
         }}.toString();
+
+        if(EmptyUtil.isNotEmpty(params.getPageNum())){
+            sql += " LIMIT " + params.getPageNum() * params.getPageSize() + "," + params.getPageSize();
+        }
         baseLog.info(sql);
         return sql;
     }

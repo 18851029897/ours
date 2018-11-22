@@ -43,7 +43,7 @@ public class GroupManageService implements IGroupManageService {
     private IGroupMemberService groupMemberService;
 
     @Override
-    public DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) throws Exception {
+    public DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo) throws Exception {
         String url = "";
         if (EmptyUtil.isNotEmpty(photo)) {
             baseLog.info("开始上传圈子头像.");
@@ -68,7 +68,7 @@ public class GroupManageService implements IGroupManageService {
 
         //2.圈子关联用户
         UserGroup bean = new UserGroup();
-        bean.setUserId(userId);
+        bean.setUserId(params.getUserId());
         bean.setGroupId(params.getId());
         bean.setModifyTime(new Date());
         bean.setCreateTime(new Date());
@@ -76,7 +76,7 @@ public class GroupManageService implements IGroupManageService {
 
         //3.增加成员
         GroupMember member = new GroupMember();
-        member.setUserId(userId);
+        member.setUserId(params.getUserId());
         member.setGroupId(params.getId());
         member.setMemberIdentity(2);//圈主
         member.setCreateTime(new Date());
@@ -86,7 +86,7 @@ public class GroupManageService implements IGroupManageService {
     }
 
     @Override
-    public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) throws Exception {
+    public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo) throws Exception {
         String url = "";
         if (EmptyUtil.isNotEmpty(photo)) {
             baseLog.info("开始上传圈子头像.");

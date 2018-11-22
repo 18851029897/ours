@@ -1,5 +1,7 @@
 package com.ours.model.group;
 
+import com.ours.model.page.PageSearch;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "group_member", schema = "ours", catalog = "")
-public class GroupMember {
+public class GroupMember extends PageSearch {
     private Integer id;
     private Integer groupId;
     private Integer userId;

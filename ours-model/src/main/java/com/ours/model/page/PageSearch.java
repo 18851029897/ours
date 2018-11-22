@@ -1,20 +1,20 @@
-package com.ours.common.page;
+package com.ours.model.page;
 
 /**
  * Created by fish on 2018/11/21.
  */
 public class PageSearch {
 
-    private Integer start;
+    private Integer pageNum;
 
-    private Integer pageSize;
+    private Integer pageSize = 20;
 
-    public Integer getStart() {
-        return start;
+    public Integer getPageNum() {
+        return pageNum;
     }
 
-    public void setStart(Integer start) {
-        this.start = start;
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
     }
 
     public Integer getPageSize() {

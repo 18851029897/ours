@@ -16,6 +16,8 @@ public class GroupInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Integer userId;
+
     private String groupPhotoUrl;
 
     private String groupName;
@@ -44,6 +46,14 @@ public class GroupInfo implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getGroupPhotoUrl() {

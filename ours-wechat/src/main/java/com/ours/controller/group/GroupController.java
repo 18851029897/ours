@@ -2,6 +2,7 @@ package com.ours.controller.group;
 
 import com.ours.common.back.DataResponse;
 import com.ours.common.util.EmptyUtil;
+import com.ours.common.vo.group.GroupInfoVO;
 import com.ours.common.vo.group.GroupMemberVO;
 import com.ours.common.vo.user.UserGroupVO;
 import com.ours.model.group.GroupInfo;
@@ -17,6 +18,7 @@ import com.ours.service.user.IUserGroupService;
 import com.ours.service.user.IUserInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,9 +65,9 @@ public class GroupController {
      */
     @RequestMapping(value = "/saveGroupInfo", method = RequestMethod.POST)
     @ResponseBody
-    public DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) {
+    public DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo) {
         try {
-            return this.groupManageService.saveGroupInfo(params, photo, userId);
+            return this.groupManageService.saveGroupInfo(params, photo);
         } catch (Exception e) {
             e.printStackTrace();
             return new DataResponse(1001, e.getMessage());
@@ -84,9 +86,9 @@ public class GroupController {
      */
     @RequestMapping(value = "/updateGroupInfo", method = RequestMethod.POST)
     @ResponseBody
-    public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo, Integer userId) {
+    public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo) {
         try {
-            return this.groupManageService.updateGroupInfo(params, photo, userId);
+            return this.groupManageService.updateGroupInfo(params, photo);
         } catch (Exception e) {
             e.printStackTrace();
             return new DataResponse(1001, e.getMessage());
@@ -104,7 +106,17 @@ public class GroupController {
     @RequestMapping(value = "/findGroupInfo", method = RequestMethod.GET)
     @ResponseBody
     public DataResponse findGroupInfo(GroupInfo params) {
-        return new DataResponse(1000, "success", this.groupInfoService.findGroupInfoList(params));
+        List<GroupInfo> data = this.groupInfoService.findGroupInfoList(params);
+        List<GroupInfoVO> result = new ArrayList<GroupInfoVO>();
+        for (int i = 0; i < data.size(); i++) {
+            GroupInfoVO record = new GroupInfoVO();
+            BeanUtils.copyProperties(data.get(i), record);
+            if (params.getUserId().intValue() == data.get(i).getUserId()) {
+                record.setIsMaster(1);
+            }
+            result.add(record);
+        }
+        return new DataResponse(1000, "success", result);
     }
 
     /**
@@ -145,7 +157,6 @@ public class GroupController {
         this.userGroupService.updateUserGroup(params);
         return new DataResponse(1000, "success", params);
     }
-
 
     /**
      * 获取圈子成员
@@ -212,9 +223,9 @@ public class GroupController {
     @ResponseBody
     public DataResponse isInGroup(GroupMember params) {
         GroupMember record = this.groupMemberService.findGroupMember(params);
-        if(EmptyUtil.isEmpty(record)){
+        if (EmptyUtil.isEmpty(record)) {
             return new DataResponse(1000, "success", 0);
-        }else{
+        } else {
             return new DataResponse(1000, "success", 1);
         }
     }
