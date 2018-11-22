@@ -2,6 +2,7 @@ package com.ours.controller.group;
 
 import com.ours.common.back.DataResponse;
 import com.ours.common.util.EmptyUtil;
+import com.ours.common.vo.group.GroupCommentsVO;
 import com.ours.common.vo.group.GroupInfoVO;
 import com.ours.common.vo.group.GroupMemberVO;
 import com.ours.common.vo.group.GroupTopicVO;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,6 +59,9 @@ public class GroupController {
 
     @Autowired
     private IGroupTopicFileService groupTopicFileService;
+
+    @Autowired
+    private IGroupCommentsService groupCommentsService;
 
     /**
      * 新增圈子
@@ -317,6 +322,48 @@ public class GroupController {
             result.add(record);
         }
 
+        return new DataResponse(1000, "success", result);
+    }
+
+
+    /**
+     * 保存评论
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/saveGroupComments", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResponse saveGroupComments(GroupComments params) {
+        params.setCreateTime(new Date());
+        this.groupCommentsService.saveGroupComments(params);
+        return new DataResponse(1000, "success", params);
+    }
+
+
+    /**
+     * 评论列表
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/findGroupCommentsList", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse findGroupCommentsList(GroupComments params, Integer groupId) {
+        List<GroupComments> data = this.groupCommentsService.findGroupCommentsList(params);
+        List<GroupCommentsVO> result = new ArrayList<GroupCommentsVO>();
+        for (int i = 0; i < data.size(); i++) {
+            GroupCommentsVO record = new GroupCommentsVO();
+            record.setId(data.get(i).getId());
+            record.setContent(data.get(i).getContent());
+            record.setTime(data.get(i).getCreateTime());
+            UserInfo userInfo = this.userInfoService.findUserInfo(new UserInfo(data.get(i).getUserId()));
+            record.setUserName(userInfo.getNickName());
+            record.setUserPhoto(userInfo.getHeadImgUrl());
+            List<GroupTag> tags = this.groupTagService.findGroupTagList(new GroupTag(groupId, data.get(i).getUserId(), 0));
+            record.setTags(tags);
+            result.add(record);
+        }
         return new DataResponse(1000, "success", result);
     }
 

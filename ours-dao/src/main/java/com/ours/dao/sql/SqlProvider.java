@@ -655,6 +655,65 @@ public class SqlProvider {
         baseLog.info(sql);
         return sql;
     }
+
+
+    /**
+     * 保存主题评论
+     *
+     * @param params
+     * @return
+     */
+    public String saveGroupComments(GroupComments params) {
+        String sql = new SQL() {{
+            INSERT_INTO("group_comments");
+            if (EmptyUtil.isNotEmpty(params.getType())) {
+                VALUES("type", "#{type}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicId())) {
+                VALUES("topic_id", "#{topicId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityId())) {
+                VALUES("activity_id", "#{activityId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                VALUES("user_id", "#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getContent())) {
+                VALUES("content", "#{content}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+    /**
+     * 主题评论列表
+     *
+     * @param params
+     * @return
+     */
+    public String findGroupCommentsList(GroupComments params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("group_comments");
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicId())) {
+                WHERE("topic_id=#{topicId}");
+            }
+        }}.toString();
+
+        if (EmptyUtil.isNotEmpty(params.getPageNum())) {
+            sql += " LIMIT " + params.getPageNum() * params.getPageSize() + "," + params.getPageSize();
+        }
+        baseLog.info(sql);
+        return sql;
+    }
+
 }
 
 
