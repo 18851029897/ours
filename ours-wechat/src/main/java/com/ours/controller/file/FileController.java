@@ -38,7 +38,7 @@ public class FileController {
     public DataResponse upload(MultipartFile file) throws Exception {
         String fileUrl = "";
         if (EmptyUtil.isNotEmpty(file)) {
-            baseLog.info("开始上传圈子头像.");
+            baseLog.info("开始上传文件.");
             InputStream input = file.getInputStream();
             int count = input.available();
             byte[] fileByte = new byte[count];
