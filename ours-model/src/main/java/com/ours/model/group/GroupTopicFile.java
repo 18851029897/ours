@@ -104,6 +104,10 @@ public class GroupTopicFile {
     public GroupTopicFile() {
     }
 
+    public GroupTopicFile(Integer topicId) {
+        this.topicId = topicId;
+    }
+
     public GroupTopicFile(String fileName, Integer fileType, Integer topicId, Date createTime) {
         this.fileName = fileName;
         this.fileType = fileType;

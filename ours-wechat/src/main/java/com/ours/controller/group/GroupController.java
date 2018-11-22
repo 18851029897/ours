@@ -4,17 +4,12 @@ import com.ours.common.back.DataResponse;
 import com.ours.common.util.EmptyUtil;
 import com.ours.common.vo.group.GroupInfoVO;
 import com.ours.common.vo.group.GroupMemberVO;
+import com.ours.common.vo.group.GroupTopicVO;
 import com.ours.common.vo.user.UserGroupVO;
-import com.ours.model.group.GroupInfo;
-import com.ours.model.group.GroupMember;
-import com.ours.model.group.GroupTag;
-import com.ours.model.group.GroupTopic;
+import com.ours.model.group.*;
 import com.ours.model.user.UserGroup;
 import com.ours.model.user.UserInfo;
-import com.ours.service.group.IGroupInfoService;
-import com.ours.service.group.IGroupManageService;
-import com.ours.service.group.IGroupMemberService;
-import com.ours.service.group.IGroupTagService;
+import com.ours.service.group.*;
 import com.ours.service.user.IUserGroupService;
 import com.ours.service.user.IUserInfoService;
 import org.slf4j.Logger;
@@ -27,7 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fish on 2018/11/12.
@@ -55,6 +51,12 @@ public class GroupController {
 
     @Autowired
     private IGroupTagService groupTagService;
+
+    @Autowired
+    private IGroupTopicService groupTopicService;
+
+    @Autowired
+    private IGroupTopicFileService groupTopicFileService;
 
     /**
      * 新增圈子
@@ -261,5 +263,58 @@ public class GroupController {
         }
     }
 
+    /**
+     * 主题列表
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/findTopicList", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse findTopicList(GroupTopic params) {
+        List<GroupTopic> data = new ArrayList<GroupTopic>();
+        //1. 先查出所有已经发布的.
+        GroupTopic release = new GroupTopic(params.getGroupId(), 1);
+        List<GroupTopic> releaseList = this.groupTopicService.findGroupTopicList(release);
+
+        //如果传userId, 查出自己未发布的.
+        if (EmptyUtil.isNotEmpty(params.getUserId())) {
+            //2. 再查出自己未发布的.
+            GroupTopic unRelease = new GroupTopic(params.getGroupId(), params.getUserId(), 0);
+            List<GroupTopic> unReleaseList = this.groupTopicService.findGroupTopicList(unRelease);
+            data.addAll(unReleaseList);
+        }
+
+        //3. 两个list合并
+        data.addAll(releaseList);
+
+        List<GroupTopicVO> result = new ArrayList<GroupTopicVO>();
+        for (int i = 0; i < data.size(); i++) {
+            //处理主题信息
+            GroupTopicVO record = new GroupTopicVO();
+            BeanUtils.copyProperties(data.get(i), record);
+
+            //处理用户信息
+            UserInfo userInfo = this.userInfoService.findUserInfo(new UserInfo(data.get(i).getUserId()));
+            record.setUserName(userInfo.getNickName());
+
+            //是否为圈主
+            if (params.getUserId().intValue() == data.get(i).getUserId()) {
+                record.setIsMaster(1);
+            }
+
+            //处理文件信息
+            List<GroupTopicFile> files = this.groupTopicFileService.findGroupTopicFileList(new GroupTopicFile(data.get(i).getId()));
+            record.setFiles(files);
+
+            //处理标签信息
+            GroupTag tag = this.groupTagService.findGroupTag(new GroupTag(data.get(i).getTagId()));
+            record.setTagName(tag.getTagName());
+
+            result.add(record);
+        }
+
+        return new DataResponse(1000, "success", result);
+    }
 
 }

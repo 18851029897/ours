@@ -26,6 +26,7 @@ public class GroupTopic extends PageSearch {
     private Integer isTop;
     private Integer isDel;
     private Integer isGood;
+    private Integer status;
     private Date modifyTime;
     private Date createTime;
 
@@ -160,6 +161,16 @@ public class GroupTopic extends PageSearch {
     }
 
     @Basic
+    @Column(name = "status")
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Basic
     @Column(name = "modify_time")
     public Date getModifyTime() {
         return modifyTime;
@@ -223,5 +234,19 @@ public class GroupTopic extends PageSearch {
         result = 31 * result + (modifyTime != null ? modifyTime.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         return result;
+    }
+
+    public GroupTopic() {
+    }
+
+    public GroupTopic(Integer groupId, Integer status) {
+        this.groupId = groupId;
+        this.status = status;
+    }
+
+    public GroupTopic(Integer groupId, Integer userId, Integer status) {
+        this.groupId = groupId;
+        this.userId = userId;
+        this.status = status;
     }
 }

@@ -6,6 +6,8 @@ import com.ours.service.group.IGroupTopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by fish on 2018/11/22.
  */
@@ -18,5 +20,10 @@ public class GroupTopicService implements IGroupTopicService {
     @Override
     public int saveGroupTopic(GroupTopic params) {
         return this.groupTopicMapper.saveGroupTopic(params);
+    }
+
+    @Override
+    public List<GroupTopic> findGroupTopicList(GroupTopic params) {
+        return this.groupTopicMapper.findGroupTopicList(params);
     }
 }

@@ -559,6 +559,9 @@ public class SqlProvider {
             if (EmptyUtil.isNotEmpty(params.getIsGood())) {
                 VALUES("is_good", "#{isGood}");
             }
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                VALUES("status", "#{status}");
+            }
             if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
                 VALUES("modify_time", "#{modifyTime}");
             }
@@ -593,6 +596,62 @@ public class SqlProvider {
                 VALUES("create_time", "#{createTime}");
             }
         }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+    /**
+     * 主题列表
+     *
+     * @param params
+     * @return
+     */
+    public String findGroupTopicList(GroupTopic params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("group_topic");
+
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                WHERE("GROUP_ID=#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                WHERE("USER_ID=#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                WHERE("STATUS=#{status}");
+            }
+        }}.toString();
+
+        if (EmptyUtil.isNotEmpty(params.getPageNum())) {
+            sql += " LIMIT " + params.getPageNum() * params.getPageSize() + "," + params.getPageSize();
+        }
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 主题文件列表
+     *
+     * @param params
+     * @return
+     */
+    public String findGroupTopicFileList(GroupTopicFile params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("group_topic_file");
+
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicId())) {
+                WHERE("TOPIC_ID=#{topicId}");
+            }
+        }}.toString();
+
         baseLog.info(sql);
         return sql;
     }

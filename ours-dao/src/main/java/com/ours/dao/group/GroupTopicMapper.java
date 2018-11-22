@@ -12,25 +12,26 @@ import java.util.List;
 @Mapper
 public interface GroupTopicMapper {
 
-//    @SelectProvider(type = SqlProvider.class, method = "findGroupTopicList")
-//    @Results({
-//            @Result(property = "id", column = "ID"),
-//            @Result(property = "groupId", column = "GROUP_ID"),
-//            @Result(property = "userId", column = "USER_ID"),
-//            @Result(property = "tagId", column = "TAG_ID"),
-//            @Result(property = "topicTitle", column = "TOPIC_TITLE"),
-//            @Result(property = "topicContent", column = "TOPIC_CONTENT"),
-//            @Result(property = "topicType", column = "TOPIC_TYPE"),
-//            @Result(property = "topicPrice", column = "TOPIC_PRICE"),
-//            @Result(property = "topicShow", column = "TOPIC_SHOW"),
-//            @Result(property = "topicRead", column = "TOPIC_READ"),
-//            @Result(property = "isTop", column = "IS_TOP"),
-//            @Result(property = "isDel", column = "IS_DEL"),
-//            @Result(property = "isGood", column = "IS_GOOD"),
-//            @Result(property = "modifyTime", column = "MODIFY_TIME"),
-//            @Result(property = "createTime", column = "CREATE_TIME"),
-//    })
-//    List<GroupTopic> findGroupTopicList(GroupTopic params);
+    @SelectProvider(type = SqlProvider.class, method = "findGroupTopicList")
+    @Results({
+            @Result(property = "id", column = "ID"),
+            @Result(property = "groupId", column = "GROUP_ID"),
+            @Result(property = "userId", column = "USER_ID"),
+            @Result(property = "tagId", column = "TAG_ID"),
+            @Result(property = "topicTitle", column = "TOPIC_TITLE"),
+            @Result(property = "topicContent", column = "TOPIC_CONTENT"),
+            @Result(property = "topicType", column = "TOPIC_TYPE"),
+            @Result(property = "topicPrice", column = "TOPIC_PRICE"),
+            @Result(property = "topicShow", column = "TOPIC_SHOW"),
+            @Result(property = "topicRead", column = "TOPIC_READ"),
+            @Result(property = "isTop", column = "IS_TOP"),
+            @Result(property = "isDel", column = "IS_DEL"),
+            @Result(property = "isGood", column = "IS_GOOD"),
+            @Result(property = "status", column = "STATUS"),
+            @Result(property = "modifyTime", column = "MODIFY_TIME"),
+            @Result(property = "createTime", column = "CREATE_TIME"),
+    })
+    List<GroupTopic> findGroupTopicList(GroupTopic params);
 
 
     @InsertProvider(type = SqlProvider.class, method = "saveGroupTopic")

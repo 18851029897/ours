@@ -6,6 +6,8 @@ import com.ours.service.group.IGroupTopicFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by fish on 2018/11/22.
  */
@@ -18,5 +20,10 @@ public class GroupTopicFileService implements IGroupTopicFileService {
     @Override
     public int saveGroupTopicFile(GroupTopicFile params) {
         return this.groupTopicFileMapper.saveGroupTopicFile(params);
+    }
+
+    @Override
+    public List<GroupTopicFile> findGroupTopicFileList(GroupTopicFile params) {
+        return this.groupTopicFileMapper.findGroupTopicFileList(params);
     }
 }

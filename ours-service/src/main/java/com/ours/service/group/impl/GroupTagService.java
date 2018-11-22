@@ -26,4 +26,9 @@ public class GroupTagService implements IGroupTagService {
     public List<GroupTag> findGroupTagList(GroupTag params) {
         return this.groupTagMapper.findGroupTagList(params);
     }
+
+    @Override
+    public GroupTag findGroupTag(GroupTag params) {
+        return this.groupTagMapper.findGroupTag(params);
+    }
 }

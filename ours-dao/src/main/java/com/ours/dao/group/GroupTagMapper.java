@@ -26,6 +26,20 @@ public interface GroupTagMapper {
     List<GroupTag> findGroupTagList(GroupTag params);
 
 
+    @SelectProvider(type = SqlProvider.class, method = "findGroupTagList")
+    @Results({
+            @Result(property = "id", column = "ID"),
+            @Result(property = "groupId", column = "GROUP_ID"),
+            @Result(property = "tagName", column = "TAG_NAME"),
+            @Result(property = "sort", column = "SORT"),
+            @Result(property = "isDel", column = "IS_DEL"),
+            @Result(property = "createTime", column = "CREATE_TIME"),
+            @Result(property = "userId", column = "USER_ID"),
+            @Result(property = "tagType", column = "TAG_TYPE"),
+    })
+    GroupTag findGroupTag(GroupTag params);
+
+
     @InsertProvider(type = SqlProvider.class, method = "saveGroupTag")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int saveGroupTag(GroupTag params);

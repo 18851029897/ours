@@ -13,4 +13,6 @@ public interface IGroupTagService {
 
     public List<GroupTag> findGroupTagList(GroupTag params);
 
+    public GroupTag findGroupTag(GroupTag params);
+
 }

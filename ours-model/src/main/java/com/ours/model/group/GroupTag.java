@@ -22,6 +22,10 @@ public class GroupTag {
 
     }
 
+    public GroupTag(Integer id) {
+        this.id = id;
+    }
+
     public GroupTag(Integer groupId, Integer userId, Integer tagType) {
         this.groupId = groupId;
         this.userId = userId;
