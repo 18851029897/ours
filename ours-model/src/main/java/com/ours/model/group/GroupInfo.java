@@ -40,6 +40,14 @@ public class GroupInfo implements Serializable {
 
     private Date createTime;
 
+    public GroupInfo() {
+    }
+
+    public GroupInfo(Integer id) {
+        this.id = id;
+    }
+
+
     public Integer getId() {
         return id;
     }

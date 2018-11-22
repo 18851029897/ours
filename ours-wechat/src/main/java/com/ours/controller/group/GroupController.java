@@ -298,9 +298,12 @@ public class GroupController {
             UserInfo userInfo = this.userInfoService.findUserInfo(new UserInfo(data.get(i).getUserId()));
             record.setUserName(userInfo.getNickName());
 
-            //是否为圈主
-            if (params.getUserId().intValue() == data.get(i).getUserId()) {
-                record.setIsMaster(1);
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                //是否为圈主
+                GroupInfo groupInfo = this.groupInfoService.findGroupInfo(new GroupInfo(data.get(i).getGroupId()));
+                if (groupInfo.getUserId() == data.get(i).getUserId()) {
+                    record.setIsMaster(1);
+                }
             }
 
             //处理文件信息

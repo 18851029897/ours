@@ -42,6 +42,7 @@ public interface GroupInfoMapper {
     @SelectProvider(type = SqlProvider.class, method = "findGroupInfoList")
     @Results({
             @Result(property = "id", column = "ID"),
+            @Result(property = "userId", column = "USER_ID"),
             @Result(property = "groupPhotoUrl", column = "GROUP_PHOTO_URL"),
             @Result(property = "groupName", column = "GROUP_NAME"),
             @Result(property = "groupTitle", column = "GROUP_TITLE"),
