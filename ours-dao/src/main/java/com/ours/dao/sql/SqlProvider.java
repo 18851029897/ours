@@ -344,6 +344,9 @@ public class SqlProvider {
             if (EmptyUtil.isNotEmpty(params.getUserId())) {
                 WHERE("USER_ID=#{userId}");
             }
+            if (EmptyUtil.isNotEmpty(params.getTagType())) {
+                WHERE("TAG_TYPE=#{tagType}");
+            }
             WHERE("IS_DEL=0");
         }}.toString();
         baseLog.info(sql);

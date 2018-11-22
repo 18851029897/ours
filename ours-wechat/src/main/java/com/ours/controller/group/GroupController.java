@@ -172,7 +172,7 @@ public class GroupController {
         for (int i = 0; i < data.size(); i++) {
             GroupMemberVO record = new GroupMemberVO();
             UserInfo userInfo = this.userInfoService.findUserInfo(new UserInfo(data.get(i).getUserId()));
-            List<GroupTag> tags = this.groupTagService.findGroupTagList(new GroupTag(data.get(i).getGroupId(), data.get(i).getUserId()));
+            List<GroupTag> tags = this.groupTagService.findGroupTagList(new GroupTag(data.get(i).getGroupId(), data.get(i).getUserId(), 0));
             record.setId(data.get(i).getId());
             record.setPhoto(userInfo.getHeadImgUrl());
             record.setName(userInfo.getNickName());
@@ -196,6 +196,19 @@ public class GroupController {
     public DataResponse updateGroupMember(GroupMember params) {
         this.groupMemberService.updateGroupMember(params);
         return new DataResponse(1000, "success", params);
+    }
+
+    /**
+     * 查询标签
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/findGroupTag", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse findGroupTag(GroupTag params) {
+        List<GroupTag> tags = this.groupTagService.findGroupTagList(params);
+        return new DataResponse(1000, "success", tags);
     }
 
 

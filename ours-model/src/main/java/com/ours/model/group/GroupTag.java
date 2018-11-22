@@ -22,9 +22,10 @@ public class GroupTag {
 
     }
 
-    public GroupTag(Integer groupId, Integer userId) {
+    public GroupTag(Integer groupId, Integer userId, Integer tagType) {
         this.groupId = groupId;
         this.userId = userId;
+        this.tagType = tagType;
     }
 
     @Id
