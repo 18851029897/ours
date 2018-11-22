@@ -104,7 +104,9 @@ public class GroupManageService implements IGroupManageService {
             baseLog.info("上传后的文件名：" + url);
         }
         //1.圈子更新信息
-        params.setGroupPhotoUrl(url);
+        if (EmptyUtil.isNotEmpty(url)) {
+            params.setGroupPhotoUrl(url);
+        }
         params.setModifyTime(new Date());
         this.groupInfoService.updateGroupInfo(params);
         return new DataResponse(1000, "success", params);

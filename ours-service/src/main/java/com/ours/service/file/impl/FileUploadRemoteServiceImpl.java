@@ -27,42 +27,19 @@ public class FileUploadRemoteServiceImpl implements IFileUploadRemoteService {
 
     private String fileDir;
 
-    private Float minScale;
-
-    private Float minQuality;
-
-    private Integer smallWidth;
-
-    private Integer smallHeight;
-
-    private Integer photoWidth;
-
-    private Integer photoHeight;
-
     /**
      * 原图地址前缀
      */
     private static final String ORIGINAL_PATH = "ori";
 
-    /**
-     * 压缩图地址前缀
-     */
-    private static final String MIN_PATH = "min";
-
-    /**
-     * 缩略图地址前缀
-     */
-    private static final String SMALL_PATH = "small";
-
-    /**
-     * 头像地址前缀
-     */
-    private static final String PHOTO_PATH = "photo";
-
     public void init() {
         BaseSysParam params = new BaseSysParam();
         params.setParamKey("IMAGE_DIR");
         this.imageDir = this.baseSysParamService.findValueByKey(params);
+
+        params = new BaseSysParam();
+        params.setParamKey("FILE_DIR");
+        this.fileDir = this.baseSysParamService.findValueByKey(params);
     }
 
     @Override
