@@ -5,6 +5,8 @@ import com.ours.common.util.EmptyUtil;
 import com.ours.common.util.HttpsUtil;
 import com.ours.common.util.MappingUtil;
 import com.ours.model.base.BaseSysParam;
+import com.ours.model.group.GroupTopic;
+import com.ours.model.group.GroupTopicFile;
 import com.ours.model.user.UserInfo;
 import com.ours.service.base.IBaseSysParamService;
 import com.ours.service.user.IUserInfoService;
@@ -30,7 +32,7 @@ public class LoginController {
 
     public static void main(String args[]) {
 
-        System.out.println(MappingUtil.getResultsStr(UserInfo.class));
+        System.out.println(MappingUtil.getResultsStr(GroupTopicFile.class));
 
     }
 

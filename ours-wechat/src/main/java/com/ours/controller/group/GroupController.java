@@ -8,6 +8,7 @@ import com.ours.common.vo.user.UserGroupVO;
 import com.ours.model.group.GroupInfo;
 import com.ours.model.group.GroupMember;
 import com.ours.model.group.GroupTag;
+import com.ours.model.group.GroupTopic;
 import com.ours.model.user.UserGroup;
 import com.ours.model.user.UserInfo;
 import com.ours.service.group.IGroupInfoService;
@@ -72,7 +73,6 @@ public class GroupController {
             e.printStackTrace();
             return new DataResponse(1001, e.getMessage());
         }
-
     }
 
 
@@ -240,6 +240,24 @@ public class GroupController {
             return new DataResponse(1000, "success", 0);
         } else {
             return new DataResponse(1000, "success", 1);
+        }
+    }
+
+
+    /**
+     * 发布主题
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/saveTopic", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResponse saveTopic(GroupTopic params, String imageNames, String audioNames) {
+        try {
+            return this.groupManageService.saveTopic(params, imageNames, audioNames);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataResponse(1001, e.getMessage());
         }
     }
 

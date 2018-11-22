@@ -1,5 +1,7 @@
 package com.ours.model.group;
 
+import com.ours.model.page.PageSearch;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -10,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "group_topic", schema = "ours", catalog = "")
-public class GroupTopic {
+public class GroupTopic extends PageSearch {
     private Integer id;
     private Integer groupId;
     private Integer userId;

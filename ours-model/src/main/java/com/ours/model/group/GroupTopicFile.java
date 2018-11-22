@@ -12,9 +12,17 @@ import java.util.Date;
 public class GroupTopicFile {
     private Integer id;
     private String fileName;
-    private String filePath;
+    private Integer fileType;
     private Integer topicId;
     private Date createTime;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
 
     @Id
     @Column(name = "id")
@@ -37,13 +45,13 @@ public class GroupTopicFile {
     }
 
     @Basic
-    @Column(name = "file_path")
-    public String getFilePath() {
-        return filePath;
+    @Column(name = "file_type")
+    public Integer getFileType() {
+        return fileType;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFileType(Integer fileType) {
+        this.fileType = fileType;
     }
 
     @Basic
@@ -66,6 +74,7 @@ public class GroupTopicFile {
         this.createTime = createTime;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,9 +82,9 @@ public class GroupTopicFile {
 
         GroupTopicFile that = (GroupTopicFile) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (fileName != null ? !fileName.equals(that.fileName) : that.fileName != null) return false;
-        if (filePath != null ? !filePath.equals(that.filePath) : that.filePath != null) return false;
+        if (fileType != null ? !fileType.equals(that.fileType) : that.fileType != null) return false;
         if (topicId != null ? !topicId.equals(that.topicId) : that.topicId != null) return false;
         if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
 
@@ -84,11 +93,21 @@ public class GroupTopicFile {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
-        result = 31 * result + (filePath != null ? filePath.hashCode() : 0);
         result = 31 * result + (topicId != null ? topicId.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (fileType != null ? fileType.hashCode() : 0);
         return result;
+    }
+
+    public GroupTopicFile() {
+    }
+
+    public GroupTopicFile(String fileName, Integer fileType, Integer topicId, Date createTime) {
+        this.fileName = fileName;
+        this.fileType = fileType;
+        this.topicId = topicId;
+        this.createTime = createTime;
     }
 }

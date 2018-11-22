@@ -2,9 +2,7 @@ package com.ours.dao.sql;
 
 import com.ours.common.util.EmptyUtil;
 import com.ours.model.base.BaseSysParam;
-import com.ours.model.group.GroupInfo;
-import com.ours.model.group.GroupMember;
-import com.ours.model.group.GroupTag;
+import com.ours.model.group.*;
 import com.ours.model.user.UserGroup;
 import com.ours.model.user.UserInfo;
 import org.apache.ibatis.jdbc.SQL;
@@ -416,7 +414,7 @@ public class SqlProvider {
             ORDER_BY("CREATE_TIME ASC");
         }}.toString();
 
-        if(EmptyUtil.isNotEmpty(params.getPageNum())){
+        if (EmptyUtil.isNotEmpty(params.getPageNum())) {
             sql += " LIMIT " + params.getPageNum() * params.getPageSize() + "," + params.getPageSize();
         }
         baseLog.info(sql);
@@ -510,6 +508,90 @@ public class SqlProvider {
                 SET("member_status=#{memberStatus}");
             }
             WHERE("group_id=#{groupId} and user_id=#{userId}");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 保存主题
+     *
+     * @param params
+     * @return
+     */
+    public String saveGroupTopic(GroupTopic params) {
+        String sql = new SQL() {{
+            INSERT_INTO("group_topic");
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                VALUES("group_id", "#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                VALUES("user_id", "#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTagId())) {
+                VALUES("tag_id", "#{tagId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicTitle())) {
+                VALUES("topic_title", "#{topicTitle}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicContent())) {
+                VALUES("topic_content", "#{topicContent}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicType())) {
+                VALUES("topic_type", "#{topicType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicPrice())) {
+                VALUES("topic_price", "#{topicPrice}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicShow())) {
+                VALUES("topic_show", "#{topicShow}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicRead())) {
+                VALUES("topic_read", "#{topicRead}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsTop())) {
+                VALUES("is_top", "#{isTop}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsDel())) {
+                VALUES("is_del", "#{isDel}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsGood())) {
+                VALUES("is_good", "#{isGood}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                VALUES("modify_time", "#{modifyTime}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 保存主题文件
+     *
+     * @param params
+     * @return
+     */
+    public String saveGroupTopicFile(GroupTopicFile params) {
+        String sql = new SQL() {{
+            INSERT_INTO("group_topic_file");
+            if (EmptyUtil.isNotEmpty(params.getFileName())) {
+                VALUES("file_name", "#{fileName}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getFileType())) {
+                VALUES("file_type", "#{fileType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicId())) {
+                VALUES("topic_id", "#{topicId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
         }}.toString();
         baseLog.info(sql);
         return sql;
