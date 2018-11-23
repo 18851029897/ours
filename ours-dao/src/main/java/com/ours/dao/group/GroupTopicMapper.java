@@ -36,6 +36,9 @@ public interface GroupTopicMapper {
 
     @InsertProvider(type = SqlProvider.class, method = "saveGroupTopic")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    int saveGroupTopic(GroupTopic params);
+    Integer saveGroupTopic(GroupTopic params);
+
+    @UpdateProvider(type = SqlProvider.class, method = "updateGroupTopic")
+    Integer updateGroupTopic(GroupTopic params);
 
 }

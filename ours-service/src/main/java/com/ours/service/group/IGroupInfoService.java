@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface IGroupInfoService {
 
-    int saveGroupInfo(GroupInfo params);
+    Integer saveGroupInfo(GroupInfo params);
 
-    int updateGroupInfo(GroupInfo params);
+    Integer updateGroupInfo(GroupInfo params);
 
     List<GroupInfo> findGroupInfoList(GroupInfo params);
 

@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface IGroupTagService {
 
-    public int saveGroupTag(GroupTag params);
+    Integer saveGroupTag(GroupTag params);
 
-    public List<GroupTag> findGroupTagList(GroupTag params);
+    List<GroupTag> findGroupTagList(GroupTag params);
 
-    public GroupTag findGroupTag(GroupTag params);
+    GroupTag findGroupTag(GroupTag params);
 
 }

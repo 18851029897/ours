@@ -12,9 +12,9 @@ import java.io.IOException;
  */
 public interface IGroupManageService {
 
-    public DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo) throws Exception;
+    DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo) throws Exception;
 
-    public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo) throws Exception;
+    DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo) throws Exception;
 
-    public DataResponse saveTopic(GroupTopic params, String imageNames, String audioNames) throws Exception;
+    DataResponse saveTopic(GroupTopic params, String imageNames, String audioNames) throws Exception;
 }

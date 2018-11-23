@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface IUserGroupService {
 
-    public List<UserGroup> findUserGroupList(UserGroup params);
+    List<UserGroup> findUserGroupList(UserGroup params);
 
-    public int saveUserGroup(UserGroup params);
+    Integer saveUserGroup(UserGroup params);
 
-    public int updateUserGroup(UserGroup params);
+    Integer updateUserGroup(UserGroup params);
 
 }

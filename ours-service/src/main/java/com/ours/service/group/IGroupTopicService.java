@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface IGroupTopicService {
 
-    public int saveGroupTopic(GroupTopic params);
+    Integer saveGroupTopic(GroupTopic params);
 
-    public List<GroupTopic> findGroupTopicList(GroupTopic params);
+    List<GroupTopic> findGroupTopicList(GroupTopic params);
 
 }

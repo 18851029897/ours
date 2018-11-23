@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IGroupCommentsService {
 
-    int saveGroupComments(GroupComments params);
+    Integer saveGroupComments(GroupComments params);
 
     List<GroupComments> findGroupCommentsList(GroupComments params);
 

@@ -30,5 +30,5 @@ public interface UserGroupMapper {
 
 
     @UpdateProvider(type = SqlProvider.class, method = "updateUserGroup")
-    int updateUserGroup(UserGroup params);
+    Integer updateUserGroup(UserGroup params);
 }

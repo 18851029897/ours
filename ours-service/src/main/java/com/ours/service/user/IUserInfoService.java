@@ -8,10 +8,10 @@ import com.ours.model.user.UserInfo;
  */
 public interface IUserInfoService {
 
-    public int saveUserInfo(UserInfo params);
+    Integer saveUserInfo(UserInfo params);
 
-    public int updateUserInfo(UserInfo params);
+    Integer updateUserInfo(UserInfo params);
 
-    public UserInfo findUserInfo(UserInfo params);
+    UserInfo findUserInfo(UserInfo params);
 
 }

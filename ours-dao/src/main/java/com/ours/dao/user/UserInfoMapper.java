@@ -15,10 +15,10 @@ public interface UserInfoMapper {
 
     @InsertProvider(type = SqlProvider.class, method = "saveUserInfo")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
-    int saveUserInfo(UserInfo params);
+    Integer saveUserInfo(UserInfo params);
 
     @UpdateProvider(type = SqlProvider.class, method = "updateUserInfo")
-    int updateUserInfo(UserInfo params);
+    Integer updateUserInfo(UserInfo params);
 
     @SelectProvider(type = SqlProvider.class, method = "findUserInfo")
     @Results({
@@ -39,7 +39,5 @@ public interface UserInfoMapper {
         @Result(property = "createTime", column = "CREATE_TIME"),
     })
     UserInfo findUserInfo(UserInfo params);
-
-    List<UserInfo> findUserInfoList(UserInfo params);
 
 }

@@ -38,10 +38,10 @@ public interface GroupMemberMapper {
 
     @InsertProvider(type = SqlProvider.class, method = "saveGroupMember")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    int saveGroupMember(GroupMember params);
+    Integer saveGroupMember(GroupMember params);
 
 
     @UpdateProvider(type = SqlProvider.class, method = "updateGroupMember")
-    int updateGroupMember(GroupMember params);
+    Integer updateGroupMember(GroupMember params);
 
 }

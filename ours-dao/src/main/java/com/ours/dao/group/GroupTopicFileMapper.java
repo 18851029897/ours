@@ -25,6 +25,6 @@ public interface GroupTopicFileMapper {
 
     @InsertProvider(type = SqlProvider.class, method = "saveGroupTopicFile")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    int saveGroupTopicFile(GroupTopicFile params);
+    Integer saveGroupTopicFile(GroupTopicFile params);
 
 }

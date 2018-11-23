@@ -14,6 +14,6 @@ public interface IFileUploadRemoteService {
      * @return 图片ID路径
      * @throws Exception
      */
-    public String storeFile(byte[] fileByte, String extName) throws Exception;
+    String storeFile(byte[] fileByte, String extName) throws Exception;
 
 }

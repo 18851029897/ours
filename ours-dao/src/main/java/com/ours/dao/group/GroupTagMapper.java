@@ -42,6 +42,6 @@ public interface GroupTagMapper {
 
     @InsertProvider(type = SqlProvider.class, method = "saveGroupTag")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    int saveGroupTag(GroupTag params);
+    Integer saveGroupTag(GroupTag params);
 
 }
