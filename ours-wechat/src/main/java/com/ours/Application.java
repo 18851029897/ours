@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Created by fish on 2018/7/26.
  */
 @SpringBootApplication
+@EnableScheduling   //开启定时任务
 public class Application extends SpringBootServletInitializer {
 
     private static Logger baseLog = LoggerFactory.getLogger(Application.class);
