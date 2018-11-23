@@ -2,6 +2,7 @@ package com.ours.controller.pay;
 
 import com.ours.common.back.DataResponse;
 import com.ours.common.util.MD5Util;
+import com.ours.common.util.OrderNoUtil;
 import com.ours.model.base.BaseSysParam;
 import com.ours.service.base.IBaseSysParamService;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class PayController {
         String nonce_str = UUID.randomUUID().toString().replaceAll("-", "");
         String sign = MD5Util.MD5Encode("");
         String body = "";
-        String out_trade_no = "";
+        String out_trade_no = OrderNoUtil.getOrderIdByUUId();
         String total_fee = "";
         String spbill_create_ip = "";
         String notify_url = "";
