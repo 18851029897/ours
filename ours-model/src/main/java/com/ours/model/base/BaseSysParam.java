@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "base_sys_param")
-public class BaseSysParam implements Serializable{
+public class BaseSysParam implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,13 @@ public class BaseSysParam implements Serializable{
     private Date updateTime;
 
     private Date createTime;
+
+    public BaseSysParam() {
+    }
+
+    public BaseSysParam(String paramKey) {
+        this.paramKey = paramKey;
+    }
 
     public Integer getId() {
         return id;

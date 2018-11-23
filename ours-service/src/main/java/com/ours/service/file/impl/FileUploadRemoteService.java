@@ -5,20 +5,18 @@ import com.ours.common.util.ImageUtil;
 import com.ours.model.base.BaseSysParam;
 import com.ours.service.base.IBaseSysParamService;
 import com.ours.service.file.IFileUploadRemoteService;
-import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import net.coobird.thumbnailator.Thumbnails.Builder;
 
 import java.io.*;
 import java.util.UUID;
 
 @Service
-public class FileUploadRemoteServiceImpl implements IFileUploadRemoteService {
+public class FileUploadRemoteService implements IFileUploadRemoteService {
 
-    private static Logger baseLog = LoggerFactory.getLogger(FileUploadRemoteServiceImpl.class);
+    private static Logger baseLog = LoggerFactory.getLogger(FileUploadRemoteService.class);
 
     @Autowired
     private IBaseSysParamService baseSysParamService;
@@ -33,13 +31,8 @@ public class FileUploadRemoteServiceImpl implements IFileUploadRemoteService {
     private static final String ORIGINAL_PATH = "ori";
 
     public void init() {
-        BaseSysParam params = new BaseSysParam();
-        params.setParamKey("IMAGE_DIR");
-        this.imageDir = this.baseSysParamService.findValueByKey(params);
-
-        params = new BaseSysParam();
-        params.setParamKey("FILE_DIR");
-        this.fileDir = this.baseSysParamService.findValueByKey(params);
+        this.imageDir = this.baseSysParamService.findValueByKey(new BaseSysParam("IMAGE_DIR"));
+        this.fileDir = this.baseSysParamService.findValueByKey(new BaseSysParam("FILE_DIR"));
     }
 
     @Override
