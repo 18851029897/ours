@@ -18,12 +18,17 @@ public class GroupTopicService implements IGroupTopicService {
     private GroupTopicMapper groupTopicMapper;
 
     @Override
-    public int saveGroupTopic(GroupTopic params) {
+    public Integer saveGroupTopic(GroupTopic params) {
         return this.groupTopicMapper.saveGroupTopic(params);
     }
 
     @Override
     public List<GroupTopic> findGroupTopicList(GroupTopic params) {
         return this.groupTopicMapper.findGroupTopicList(params);
+    }
+
+    @Override
+    public Integer updateGroupTopic(GroupTopic params) {
+        return this.groupTopicMapper.updateGroupTopic(params);
     }
 }

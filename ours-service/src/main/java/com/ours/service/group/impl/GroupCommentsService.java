@@ -18,7 +18,7 @@ public class GroupCommentsService implements IGroupCommentsService {
     private GroupCommentsMapper groupCommentsMapper;
 
     @Override
-    public int saveGroupComments(GroupComments params) {
+    public Integer saveGroupComments(GroupComments params) {
         return this.groupCommentsMapper.saveGroupComments(params);
     }
 

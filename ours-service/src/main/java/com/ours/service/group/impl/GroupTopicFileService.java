@@ -18,7 +18,7 @@ public class GroupTopicFileService implements IGroupTopicFileService {
     private GroupTopicFileMapper groupTopicFileMapper;
 
     @Override
-    public int saveGroupTopicFile(GroupTopicFile params) {
+    public Integer saveGroupTopicFile(GroupTopicFile params) {
         return this.groupTopicFileMapper.saveGroupTopicFile(params);
     }
 

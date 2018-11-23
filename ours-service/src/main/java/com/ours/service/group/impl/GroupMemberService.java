@@ -28,12 +28,12 @@ public class GroupMemberService implements IGroupMemberService {
     }
 
     @Override
-    public int saveGroupMember(GroupMember params) {
+    public Integer saveGroupMember(GroupMember params) {
         return this.groupMemberMapper.saveGroupMember(params);
     }
 
     @Override
-    public int updateGroupMember(GroupMember params) {
+    public Integer updateGroupMember(GroupMember params) {
         return this.groupMemberMapper.updateGroupMember(params);
     }
 }

@@ -714,6 +714,58 @@ public class SqlProvider {
         return sql;
     }
 
+
+    /**
+     * 更新主题信息
+     *
+     * @param params
+     * @return
+     */
+    public String updateGroupTopic(GroupTopic params) {
+        String sql = new SQL() {{
+            UPDATE("group_topic");
+            if (EmptyUtil.isNotEmpty(params.getTagId())) {
+                SET("tag_id=#{tagId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicTitle())) {
+                SET("topic_title=#{topicTitle}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicContent())) {
+                SET("topic_content=#{topicContent}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicType())) {
+                SET("topic_type=#{topicType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicPrice())) {
+                SET("topic_price=#{topicPrice}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicShow())) {
+                SET("topic_show=#{topicShow}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicRead())) {
+                SET("topic_read=#{topicRead}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsTop())) {
+                SET("is_top=#{isTop}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsDel())) {
+                SET("is_del=#{isDel}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsGood())) {
+                SET("is_good=#{isGood}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                SET("status=#{status}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                SET("modify_time=#{modifyTime}");
+            }
+            WHERE("ID=#{id}");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
 }
 
 

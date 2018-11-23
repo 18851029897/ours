@@ -16,12 +16,12 @@ public class UserInfoService implements IUserInfoService {
     private UserInfoMapper userInfoMapper;
 
     @Override
-    public int saveUserInfo(UserInfo params) {
+    public Integer saveUserInfo(UserInfo params) {
         return this.userInfoMapper.saveUserInfo(params);
     }
 
     @Override
-    public int updateUserInfo(UserInfo params) {
+    public Integer updateUserInfo(UserInfo params) {
         return this.userInfoMapper.updateUserInfo(params);
     }
 

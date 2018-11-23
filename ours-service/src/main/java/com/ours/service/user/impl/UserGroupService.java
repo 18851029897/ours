@@ -23,12 +23,12 @@ public class UserGroupService implements IUserGroupService {
     }
 
     @Override
-    public int saveUserGroup(UserGroup params) {
+    public Integer saveUserGroup(UserGroup params) {
         return this.userGroupMapper.saveUserGroup(params);
     }
 
     @Override
-    public int updateUserGroup(UserGroup params) {
+    public Integer updateUserGroup(UserGroup params) {
         return this.userGroupMapper.updateUserGroup(params);
     }
 }

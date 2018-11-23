@@ -18,12 +18,12 @@ public class GroupInfoService implements IGroupInfoService {
     private GroupInfoMapper groupInfoMapper;
 
     @Override
-    public int saveGroupInfo(GroupInfo params) {
+    public Integer saveGroupInfo(GroupInfo params) {
         return this.groupInfoMapper.saveGroupInfo(params);
     }
 
     @Override
-    public int updateGroupInfo(GroupInfo params) {
+    public Integer updateGroupInfo(GroupInfo params) {
         return this.groupInfoMapper.updateGroupInfo(params);
     }
 

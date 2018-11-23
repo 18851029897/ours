@@ -18,7 +18,7 @@ public class GroupTagService implements IGroupTagService {
     private GroupTagMapper groupTagMapper;
 
     @Override
-    public int saveGroupTag(GroupTag params) {
+    public Integer saveGroupTag(GroupTag params) {
         return this.groupTagMapper.saveGroupTag(params);
     }
 

@@ -13,4 +13,6 @@ public interface IGroupTopicService {
 
     List<GroupTopic> findGroupTopicList(GroupTopic params);
 
+    Integer updateGroupTopic(GroupTopic params);
+
 }

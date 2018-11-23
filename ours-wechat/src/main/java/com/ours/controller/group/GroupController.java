@@ -367,4 +367,19 @@ public class GroupController {
         return new DataResponse(1000, "success", result);
     }
 
+
+    /**
+     * 评论列表
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/updateGroupTopic", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse updateGroupTopic(GroupTopic params) {
+        this.groupTopicService.updateGroupTopic(params);
+        return new DataResponse(1000, "success", params);
+    }
+
+
 }
