@@ -493,7 +493,7 @@ public class SqlProvider {
 
 
     /**
-     * 更新圈子信息
+     * 更新圈子会员信息
      *
      * @param params
      * @return
