@@ -2,10 +2,7 @@ package com.ours.controller.group;
 
 import com.ours.common.back.DataResponse;
 import com.ours.common.util.EmptyUtil;
-import com.ours.common.vo.group.GroupCommentsVO;
-import com.ours.common.vo.group.GroupInfoVO;
-import com.ours.common.vo.group.GroupMemberVO;
-import com.ours.common.vo.group.GroupTopicVO;
+import com.ours.common.vo.group.*;
 import com.ours.common.vo.user.UserGroupVO;
 import com.ours.model.group.*;
 import com.ours.model.user.UserGroup;
@@ -62,6 +59,16 @@ public class GroupController {
 
     @Autowired
     private IGroupCommentsService groupCommentsService;
+
+    @Autowired
+    private IGroupActivityService groupActivityService;
+
+    @Autowired
+    private IGroupActivityFileService groupActivityFileService;
+
+    @Autowired
+    private IGroupActivityJoinService groupActivityJoinService;
+
 
     /**
      * 新增圈子
@@ -137,19 +144,18 @@ public class GroupController {
         List<UserGroupVO> data = new ArrayList<UserGroupVO>();
         List<UserGroup> userGroups = this.userGroupService.findUserGroupList(params);
         for (int i = 0; i < userGroups.size(); i++) {
-            GroupInfo bean = new GroupInfo();
-            bean.setId(userGroups.get(i).getGroupId());
-            bean = this.groupInfoService.findGroupInfo(bean);
-
+            GroupInfo bean = this.groupInfoService.findGroupInfo(new GroupInfo(userGroups.get(i).getGroupId()));
             UserGroupVO record = new UserGroupVO();
             record.setId(userGroups.get(i).getId());
             record.setName(bean.getGroupName());
             record.setSort(userGroups.get(i).getSort());
             record.setGroupId(userGroups.get(i).getGroupId());
+            record.setPhoto(bean.getGroupPhotoUrl());
 
             if (bean.getUserId() == params.getUserId()) {
                 record.setIsMaster(1);
             }
+
             data.add(record);
         }
         return new DataResponse(1000, "success", data);
@@ -383,7 +389,7 @@ public class GroupController {
 
 
     /**
-     * 保存主题评论
+     * 保存评论
      *
      * @param params
      * @return
@@ -398,7 +404,7 @@ public class GroupController {
 
 
     /**
-     * 主题评论列表
+     * 评论列表
      *
      * @param params
      * @return
@@ -439,6 +445,147 @@ public class GroupController {
             e.printStackTrace();
             return new DataResponse(1001, e.getMessage());
         }
+    }
+
+
+    /**
+     * 加入活动
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/joinActivity", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResponse joinActivity(GroupActivityJoin params) {
+        try {
+            //参与活动人数
+            List<GroupActivityJoin> joins = this.groupActivityJoinService.findGroupActivityJoinList(new GroupActivityJoin(params.getActivityId()));
+            //活动人数上限
+            GroupActivity activity = this.groupActivityService.findGroupActivity(new GroupActivity(params.getActivityId()));
+            if (joins.size() > activity.getActivityCount().intValue()) {
+                return new DataResponse(1001, "活动人数已达上限.");
+            }
+            this.groupActivityJoinService.saveGroupActivityJoin(params);
+            return new DataResponse(1000, "success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataResponse(1001, e.getMessage());
+        }
+    }
+
+
+    /**
+     * 活动列表
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/findTopicList", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse findActivityList(GroupActivity params) {
+        List<GroupActivity> data = new ArrayList<GroupActivity>();
+        //1. 先查出所有已经发布的.
+        GroupActivity release = new GroupActivity(params.getGroupId(), 1);
+        List<GroupActivity> releaseList = this.groupActivityService.findGroupActivityList(release);
+
+        //如果传userId, 查出自己未发布的.
+        if (EmptyUtil.isNotEmpty(params.getUserId())) {
+            //2. 再查出自己未发布的.
+            GroupActivity unRelease = new GroupActivity(params.getGroupId(), params.getUserId(), 0);
+            List<GroupActivity> unReleaseList = this.groupActivityService.findGroupActivityList(unRelease);
+            data.addAll(unReleaseList);
+        }
+
+        //3. 两个list合并
+        data.addAll(releaseList);
+
+        List<GroupActivityVO> result = new ArrayList<GroupActivityVO>();
+        for (int i = 0; i < data.size(); i++) {
+            //处理主题信息
+            GroupActivityVO record = new GroupActivityVO();
+            BeanUtils.copyProperties(data.get(i), record);
+
+            //处理用户信息
+            UserInfo userInfo = this.userInfoService.findUserInfo(new UserInfo(data.get(i).getUserId()));
+            record.setUserName(userInfo.getNickName());
+
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                //是否为圈主
+                GroupInfo groupInfo = this.groupInfoService.findGroupInfo(new GroupInfo(data.get(i).getGroupId()));
+                if (groupInfo.getUserId() == data.get(i).getUserId()) {
+                    record.setIsMaster(1);
+                }
+            }
+
+            //处理文件信息
+            List<GroupActivityFile> files = this.groupActivityFileService.findGroupActivityFileList(new GroupActivityFile(data.get(i).getId()));
+            record.setFiles(files);
+
+            //处理标签信息
+            GroupTag tag = this.groupTagService.findGroupTag(new GroupTag(data.get(i).getTagId()));
+            record.setTagName(tag.getTagName());
+
+            result.add(record);
+        }
+
+        return new DataResponse(1000, "success", result);
+    }
+
+
+    /**
+     * 修改活动
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/updateGroupActivity", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse updateGroupActivity(GroupActivity params) {
+        this.groupActivityService.updateGroupActivity(params);
+        return new DataResponse(1000, "success", params);
+    }
+
+
+    /**
+     * 活动详情
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/findActivity", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse findActivity(GroupActivity params) {
+        GroupActivity activity = this.groupActivityService.findGroupActivity(params);
+        GroupActivityVO result = new GroupActivityVO();
+
+        //处理主题信息
+        BeanUtils.copyProperties(activity, result);
+
+        //处理用户信息
+        UserInfo userInfo = this.userInfoService.findUserInfo(new UserInfo(activity.getUserId()));
+        result.setUserName(userInfo.getNickName());
+
+        if (EmptyUtil.isNotEmpty(params.getUserId())) {
+            //是否为圈主
+            GroupInfo groupInfo = this.groupInfoService.findGroupInfo(new GroupInfo(activity.getGroupId()));
+            if (groupInfo.getUserId() == activity.getUserId()) {
+                result.setIsMaster(1);
+            }
+        }
+
+        //处理文件信息
+        List<GroupActivityFile> files = this.groupActivityFileService.findGroupActivityFileList(new GroupActivityFile(activity.getId()));
+        result.setFiles(files);
+
+        //处理标签信息
+        GroupTag tag = this.groupTagService.findGroupTag(new GroupTag(activity.getTagId()));
+        result.setTagName(tag.getTagName());
+
+        //活动参与名额
+        List<GroupActivityJoin> joins = this.groupActivityJoinService.findGroupActivityJoinList(new GroupActivityJoin(activity.getId()));
+        result.setPlaces(joins.size());
+
+        return new DataResponse(1000, "success", result);
     }
 
 

@@ -667,7 +667,7 @@ public class SqlProvider {
 
 
     /**
-     * 保存主题评论
+     * 保存评论
      *
      * @param params
      * @return
@@ -699,7 +699,7 @@ public class SqlProvider {
     }
 
     /**
-     * 主题评论列表
+     * 评论列表
      *
      * @param params
      * @return
@@ -771,6 +771,236 @@ public class SqlProvider {
             }
             WHERE("ID=#{id}");
         }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 活动列表
+     *
+     * @param params
+     * @return
+     */
+    public String findGroupActivityList(GroupActivity params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("group_activity");
+
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                WHERE("GROUP_ID=#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                WHERE("USER_ID=#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                WHERE("STATUS=#{status}");
+            }
+        }}.toString();
+
+        if (EmptyUtil.isNotEmpty(params.getPageNum())) {
+            sql += " LIMIT " + params.getPageNum() * params.getPageSize() + "," + params.getPageSize();
+        }
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 保存活动
+     *
+     * @param params
+     * @return
+     */
+    public String saveGroupActivity(GroupActivity params) {
+        String sql = new SQL() {{
+            INSERT_INTO("group_activity");
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                VALUES("group_id", "#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                VALUES("user_id", "#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTagId())) {
+                VALUES("tag_id", "#{tagId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityTitle())) {
+                VALUES("activity_title", "#{activityTitle}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityContent())) {
+                VALUES("activity_content", "#{activityContent}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityType())) {
+                VALUES("activity_type", "#{activityType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityPrice())) {
+                VALUES("activity_price", "#{activityPrice}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityRead())) {
+                VALUES("activity_read", "#{activityRead}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsDel())) {
+                VALUES("is_del", "#{isDel}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsEnd())) {
+                VALUES("is_end", "#{isEnd}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                VALUES("status", "#{status}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                VALUES("modify_time", "#{modifyTime}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+    /**
+     * 更新主题信息
+     *
+     * @param params
+     * @return
+     */
+    public String updateGroupActivity(GroupActivity params) {
+        String sql = new SQL() {{
+            UPDATE("group_activity");
+            if (EmptyUtil.isNotEmpty(params.getTagId())) {
+                SET("tag_id=#{tagId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityTitle())) {
+                SET("activity_title=#{topicTitle}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityContent())) {
+                SET("activity_content=#{topicContent}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityType())) {
+                SET("activity_type=#{topicType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityPrice())) {
+                SET("activity_price=#{topicPrice}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityRead())) {
+                SET("activity_read=#{topicRead}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsDel())) {
+                SET("is_del=#{isDel}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsEnd())) {
+                SET("is_end=#{isEnd}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                SET("status=#{status}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                SET("modify_time=#{modifyTime}");
+            }
+            WHERE("ID=#{id}");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+    /**
+     * 保存活动文件
+     *
+     * @param params
+     * @return
+     */
+    public String saveGroupActivityFile(GroupActivityFile params) {
+        String sql = new SQL() {{
+            INSERT_INTO("group_activity_file");
+            if (EmptyUtil.isNotEmpty(params.getFileName())) {
+                VALUES("file_name", "#{fileName}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getFileType())) {
+                VALUES("file_type", "#{fileType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityId())) {
+                VALUES("activity_id", "#{activityId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 活动文件列表
+     *
+     * @param params
+     * @return
+     */
+    public String findGroupActivityFileList(GroupActivityFile params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("group_activity_file");
+
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityId())) {
+                WHERE("ACTIVITY_ID=#{activityId}");
+            }
+        }}.toString();
+
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 加入活动
+     *
+     * @param params
+     * @return
+     */
+    public String saveGroupActivityJoin(GroupActivityJoin params) {
+        String sql = new SQL() {{
+            INSERT_INTO("group_activity_join");
+            if (EmptyUtil.isNotEmpty(params.getActivityId())) {
+                VALUES("activity_id", "#{activityId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                VALUES("user_id", "#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 活动成员列表
+     *
+     * @param params
+     * @return
+     */
+    public String findGroupActivityJoinList(GroupActivityJoin params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("group_activity_join");
+
+            if (EmptyUtil.isNotEmpty(params.getId())) {
+                WHERE("ID=#{id}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityId())) {
+                WHERE("ACTIVITY_ID=#{activityId}");
+            }
+        }}.toString();
+
         baseLog.info(sql);
         return sql;
     }

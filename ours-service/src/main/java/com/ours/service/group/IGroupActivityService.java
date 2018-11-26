@@ -1,7 +1,6 @@
 package com.ours.service.group;
 
 import com.ours.model.group.GroupActivity;
-import com.ours.model.group.GroupTopic;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public interface IGroupActivityService {
 
     List<GroupActivity> findGroupActivityList(GroupActivity params);
 
-    GroupActivity findGroupActivity(GroupTopic params);
+    GroupActivity findGroupActivity(GroupActivity params);
 
     Integer saveGroupActivity(GroupActivity params);
 

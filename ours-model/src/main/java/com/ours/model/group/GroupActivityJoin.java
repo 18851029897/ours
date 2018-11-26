@@ -55,4 +55,10 @@ public class GroupActivityJoin {
         this.createTime = createTime;
     }
 
+    public GroupActivityJoin() {
+    }
+
+    public GroupActivityJoin(Integer activityId) {
+        this.activityId = activityId;
+    }
 }

@@ -2,7 +2,6 @@ package com.ours.dao.group;
 
 import com.ours.dao.sql.SqlProvider;
 import com.ours.model.group.GroupActivity;
-import com.ours.model.group.GroupTopic;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -52,7 +51,7 @@ public interface GroupActivityMapper {
             @Result(property = "modifyTime", column = "MODIFY_TIME"),
             @Result(property = "createTime", column = "CREATE_TIME"),
     })
-    GroupActivity findGroupActivity(GroupTopic params);
+    GroupActivity findGroupActivity(GroupActivity params);
 
     @InsertProvider(type = SqlProvider.class, method = "saveGroupActivity")
     @Options(useGeneratedKeys = true, keyProperty = "id")

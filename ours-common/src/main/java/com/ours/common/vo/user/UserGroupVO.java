@@ -15,6 +15,8 @@ public class UserGroupVO {
 
     private Integer isMaster;
 
+    private String photo;
+
     public Integer getId() {
         return id;
     }
@@ -53,5 +55,13 @@ public class UserGroupVO {
 
     public void setIsMaster(Integer isMaster) {
         this.isMaster = isMaster;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

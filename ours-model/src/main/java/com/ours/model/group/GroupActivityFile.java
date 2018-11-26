@@ -66,6 +66,13 @@ public class GroupActivityFile {
         this.createTime = createTime;
     }
 
+    public GroupActivityFile() {
+    }
+
+    public GroupActivityFile(Integer activityId) {
+        this.activityId = activityId;
+    }
+
     public GroupActivityFile(String fileName, Integer fileType, Integer activityId, Date createTime) {
         this.fileName = fileName;
         this.fileType = fileType;

@@ -1,5 +1,7 @@
 package com.ours.model.group;
 
+import com.ours.model.page.PageSearch;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "group_activity", schema = "ours", catalog = "")
-public class GroupActivity {
+public class GroupActivity extends PageSearch{
     private Integer id;
     private Integer groupId;
     private Integer userId;
@@ -174,6 +176,25 @@ public class GroupActivity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+
+    public GroupActivity() {
+    }
+
+    public GroupActivity(Integer id) {
+        this.id = id;
+    }
+
+    public GroupActivity(Integer groupId, Integer status) {
+        this.groupId = groupId;
+        this.status = status;
+    }
+
+    public GroupActivity(Integer groupId, Integer userId, Integer status) {
+        this.groupId = groupId;
+        this.userId = userId;
+        this.status = status;
     }
 
 }

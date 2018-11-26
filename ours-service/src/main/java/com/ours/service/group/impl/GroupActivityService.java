@@ -27,7 +27,7 @@ public class GroupActivityService implements IGroupActivityService {
     }
 
     @Override
-    public GroupActivity findGroupActivity(GroupTopic params) {
+    public GroupActivity findGroupActivity(GroupActivity params) {
         return this.groupActivityMapper.findGroupActivity(params);
     }
 
