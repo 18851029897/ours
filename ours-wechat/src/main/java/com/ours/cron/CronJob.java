@@ -30,22 +30,22 @@ public class CronJob {
     @Async
     @Scheduled(cron = "0 0/1 * * * ?") //每分钟启动
     public void memberJob() {
-        long start = System.currentTimeMillis();
-        baseLog.info("定时任务开始执行-->扫描成员表,是否有体验到期ing...");
-        GroupMember params = new GroupMember();
-        params.setMemberStatus(3);
-        List<GroupMember> members = this.groupMemberMapper.findGroupMemberList(params);
-        int count = 0;
-        for (int i = 0; i < members.size(); i++) {
-            if (DateUtil.differentDaysByMillisecond(members.get(i).getCreateTime(), new Date()) > 3) {
-                GroupMember bean = members.get(i);
-                bean.setMemberStatus(2);
-                this.groupMemberMapper.updateGroupMember(bean);
-                count++;
-            }
-        }
-        long end = System.currentTimeMillis();
-        baseLog.info("定时任务执行结束-->扫描成员表,是否有体验到期end...耗时:" + (end - start) + "ms, 处理" + count + "条数据.");
+//        long start = System.currentTimeMillis();
+//        baseLog.info("定时任务开始执行-->扫描成员表,是否有体验到期ing...");
+//        GroupMember params = new GroupMember();
+//        params.setMemberStatus(3);
+//        List<GroupMember> members = this.groupMemberMapper.findGroupMemberList(params);
+//        int count = 0;
+//        for (int i = 0; i < members.size(); i++) {
+//            if (DateUtil.differentDaysByMillisecond(members.get(i).getCreateTime(), new Date()) > 3) {
+//                GroupMember bean = members.get(i);
+//                bean.setMemberStatus(2);
+//                this.groupMemberMapper.updateGroupMember(bean);
+//                count++;
+//            }
+//        }
+//        long end = System.currentTimeMillis();
+//        baseLog.info("定时任务执行结束-->扫描成员表,是否有体验到期end...耗时:" + (end - start) + "ms, 处理" + count + "条数据.");
     }
 
 }

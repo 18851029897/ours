@@ -500,7 +500,7 @@ public class GroupController {
      * @param params
      * @return
      */
-    @RequestMapping(value = "/findTopicList", method = RequestMethod.GET)
+    @RequestMapping(value = "/findActivityList", method = RequestMethod.GET)
     @ResponseBody
     public DataResponse findActivityList(GroupActivity params) {
         List<GroupActivity> data = new ArrayList<GroupActivity>();
