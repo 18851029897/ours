@@ -2,10 +2,7 @@ package com.ours.service.group.impl;
 
 import com.ours.common.back.DataResponse;
 import com.ours.common.util.EmptyUtil;
-import com.ours.model.group.GroupInfo;
-import com.ours.model.group.GroupMember;
-import com.ours.model.group.GroupTopic;
-import com.ours.model.group.GroupTopicFile;
+import com.ours.model.group.*;
 import com.ours.model.user.UserGroup;
 import com.ours.service.file.IFileUploadRemoteService;
 import com.ours.service.group.*;
@@ -47,6 +44,16 @@ public class GroupManageService implements IGroupManageService {
 
     @Autowired
     private IGroupTopicFileService groupTopicFileService;
+
+    @Autowired
+    private IGroupActivityService groupActivityService;
+
+    @Autowired
+    private IGroupActivityFileService groupActivityFileService;
+
+    @Autowired
+    private IGroupActivityJoinService groupActivityJoinService;
+
 
     @Override
     public DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo) throws Exception {
@@ -141,6 +148,35 @@ public class GroupManageService implements IGroupManageService {
             for (int i = 0; i < audios.length; i++) {
                 GroupTopicFile audio = new GroupTopicFile(audios[i], 1, params.getId(), new Date());
                 this.groupTopicFileService.saveGroupTopicFile(audio);
+            }
+        }
+
+        return new DataResponse(1000, "success", params);
+    }
+
+    @Override
+    public DataResponse saveActivity(GroupActivity params, String imageNames, String audioNames) throws Exception {
+        //1.保存主题信息
+        params.setModifyTime(new Date());
+        params.setCreateTime(new Date());
+        this.groupActivityService.saveGroupActivity(params);
+
+        if (EmptyUtil.isNotEmpty(imageNames)) {
+            //2.保存文件信息
+            String[] images = imageNames.split(",");
+            //处理图片
+            for (int i = 0; i < images.length; i++) {
+                GroupActivityFile image = new GroupActivityFile(images[i], 0, params.getId(), new Date());
+                this.groupActivityFileService.saveGroupActivityFile(image);
+            }
+        }
+
+        if (EmptyUtil.isNotEmpty(audioNames)) {
+            //处理音频
+            String[] audios = audioNames.split(",");
+            for (int i = 0; i < audios.length; i++) {
+                GroupActivityFile audio = new GroupActivityFile(audios[i], 1, params.getId(), new Date());
+                this.groupActivityFileService.saveGroupActivityFile(audio);
             }
         }
 

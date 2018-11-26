@@ -146,6 +146,10 @@ public class GroupController {
             record.setName(bean.getGroupName());
             record.setSort(userGroups.get(i).getSort());
             record.setGroupId(userGroups.get(i).getGroupId());
+
+            if (bean.getUserId() == params.getUserId()) {
+                record.setIsMaster(1);
+            }
             data.add(record);
         }
         return new DataResponse(1000, "success", data);
@@ -327,7 +331,59 @@ public class GroupController {
 
 
     /**
-     * 保存评论
+     * 主题详情
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/findTopic", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse findTopic(GroupTopic params) {
+        GroupTopic topic = this.groupTopicService.findGroupTopic(params);
+        GroupTopicVO result = new GroupTopicVO();
+
+        //处理主题信息
+        BeanUtils.copyProperties(topic, result);
+
+        //处理用户信息
+        UserInfo userInfo = this.userInfoService.findUserInfo(new UserInfo(topic.getUserId()));
+        result.setUserName(userInfo.getNickName());
+
+        if (EmptyUtil.isNotEmpty(params.getUserId())) {
+            //是否为圈主
+            GroupInfo groupInfo = this.groupInfoService.findGroupInfo(new GroupInfo(topic.getGroupId()));
+            if (groupInfo.getUserId() == topic.getUserId()) {
+                result.setIsMaster(1);
+            }
+        }
+
+        //处理文件信息
+        List<GroupTopicFile> files = this.groupTopicFileService.findGroupTopicFileList(new GroupTopicFile(topic.getId()));
+        result.setFiles(files);
+
+        //处理标签信息
+        GroupTag tag = this.groupTagService.findGroupTag(new GroupTag(topic.getTagId()));
+        result.setTagName(tag.getTagName());
+
+        return new DataResponse(1000, "success", result);
+    }
+
+    /**
+     * 修改主题
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "/updateGroupTopic", method = RequestMethod.GET)
+    @ResponseBody
+    public DataResponse updateGroupTopic(GroupTopic params) {
+        this.groupTopicService.updateGroupTopic(params);
+        return new DataResponse(1000, "success", params);
+    }
+
+
+    /**
+     * 保存主题评论
      *
      * @param params
      * @return
@@ -342,7 +398,7 @@ public class GroupController {
 
 
     /**
-     * 评论列表
+     * 主题评论列表
      *
      * @param params
      * @return
@@ -369,16 +425,20 @@ public class GroupController {
 
 
     /**
-     * 评论列表
+     * 发布活动
      *
      * @param params
      * @return
      */
-    @RequestMapping(value = "/updateGroupTopic", method = RequestMethod.GET)
+    @RequestMapping(value = "/saveActivity", method = RequestMethod.POST)
     @ResponseBody
-    public DataResponse updateGroupTopic(GroupTopic params) {
-        this.groupTopicService.updateGroupTopic(params);
-        return new DataResponse(1000, "success", params);
+    public DataResponse saveActivity(GroupActivity params, String imageNames, String audioNames) {
+        try {
+            return this.groupManageService.saveActivity(params, imageNames, audioNames);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataResponse(1001, e.getMessage());
+        }
     }
 
 

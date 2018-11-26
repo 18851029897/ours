@@ -239,6 +239,10 @@ public class GroupTopic extends PageSearch {
     public GroupTopic() {
     }
 
+    public GroupTopic(Integer id) {
+        this.id = id;
+    }
+
     public GroupTopic(Integer groupId, Integer status) {
         this.groupId = groupId;
         this.status = status;

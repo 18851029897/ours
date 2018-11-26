@@ -28,6 +28,11 @@ public class GroupTopicService implements IGroupTopicService {
     }
 
     @Override
+    public GroupTopic findGroupTopic(GroupTopic params) {
+        return this.groupTopicMapper.findGroupTopic(params);
+    }
+
+    @Override
     public Integer updateGroupTopic(GroupTopic params) {
         return this.groupTopicMapper.updateGroupTopic(params);
     }

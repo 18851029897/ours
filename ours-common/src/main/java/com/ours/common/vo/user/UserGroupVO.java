@@ -13,6 +13,8 @@ public class UserGroupVO {
 
     private Integer groupId;
 
+    private Integer isMaster;
+
     public Integer getId() {
         return id;
     }
@@ -43,5 +45,13 @@ public class UserGroupVO {
 
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
+    }
+
+    public Integer getIsMaster() {
+        return isMaster;
+    }
+
+    public void setIsMaster(Integer isMaster) {
+        this.isMaster = isMaster;
     }
 }

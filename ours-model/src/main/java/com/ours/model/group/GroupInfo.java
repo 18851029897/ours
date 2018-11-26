@@ -32,6 +32,10 @@ public class GroupInfo implements Serializable {
 
     private Integer isDel;
 
+    private Integer isTopic;
+
+    private Integer isActivity;
+
     private String validityDay;
 
     private Integer freeDay;
@@ -118,6 +122,22 @@ public class GroupInfo implements Serializable {
 
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
+    }
+
+    public Integer getIsTopic() {
+        return isTopic;
+    }
+
+    public void setIsTopic(Integer isTopic) {
+        this.isTopic = isTopic;
+    }
+
+    public Integer getIsActivity() {
+        return isActivity;
+    }
+
+    public void setIsActivity(Integer isActivity) {
+        this.isActivity = isActivity;
     }
 
     public String getValidityDay() {

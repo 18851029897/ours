@@ -11,8 +11,10 @@ public interface IGroupTopicService {
 
     Integer saveGroupTopic(GroupTopic params);
 
+    Integer updateGroupTopic(GroupTopic params);
+
     List<GroupTopic> findGroupTopicList(GroupTopic params);
 
-    Integer updateGroupTopic(GroupTopic params);
+    GroupTopic findGroupTopic(GroupTopic params);
 
 }

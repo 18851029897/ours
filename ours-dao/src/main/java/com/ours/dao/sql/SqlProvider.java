@@ -482,6 +482,15 @@ public class SqlProvider {
             if (EmptyUtil.isNotEmpty(params.getFreeDay())) {
                 SET("free_day=#{freeDay}");
             }
+            if (EmptyUtil.isNotEmpty(params.getIsDel())) {
+                SET("is_del=#{isDel}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsTopic())) {
+                SET("is_topic=#{isTopic}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getIsActivity())) {
+                SET("is_activity=#{isActivity}");
+            }
             if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
                 SET("modify_time=#{modifyTime}");
             }
