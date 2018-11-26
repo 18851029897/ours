@@ -99,6 +99,28 @@ public class GroupManageService implements IGroupManageService {
     }
 
     @Override
+    public DataResponse joinGroupInfo(UserGroup params) throws Exception {
+        //1.user_group新增一条记录
+        this.userGroupService.saveUserGroup(params);
+
+        //2.圈子成员表新增一条记录
+        GroupMember member = new GroupMember();
+        member.setUserId(params.getUserId());
+        member.setGroupId(params.getGroupId());
+        member.setMemberIdentity(0);//成员
+
+        GroupInfo group = this.groupInfoService.findGroupInfo(new GroupInfo(params.getGroupId()));
+        if (group.getGroupType().intValue() == 0) {
+            member.setMemberStatus(0);//免费的圈子进入是成员
+        } else {
+            member.setMemberStatus(3);//收费的圈子进入是体验中
+        }
+        member.setCreateTime(new Date());
+        this.groupMemberService.saveGroupMember(member);
+        return new DataResponse(1000, "success", params);
+    }
+
+    @Override
     public DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo) throws Exception {
         String url = "";
         if (EmptyUtil.isNotEmpty(photo)) {

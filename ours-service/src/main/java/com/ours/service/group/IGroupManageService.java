@@ -4,6 +4,7 @@ import com.ours.common.back.DataResponse;
 import com.ours.model.group.GroupActivity;
 import com.ours.model.group.GroupInfo;
 import com.ours.model.group.GroupTopic;
+import com.ours.model.user.UserGroup;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 public interface IGroupManageService {
 
     DataResponse saveGroupInfo(GroupInfo params, MultipartFile photo) throws Exception;
+
+    DataResponse joinGroupInfo(UserGroup params) throws Exception;
 
     DataResponse updateGroupInfo(GroupInfo params, MultipartFile photo) throws Exception;
 

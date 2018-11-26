@@ -91,6 +91,26 @@ public class GroupController {
 
 
     /**
+     * 加入圈子
+     *
+     * @param params
+     * @param photo
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/joinGroupInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public DataResponse joinGroupInfo(UserGroup params) {
+        try {
+            return this.groupManageService.joinGroupInfo(params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new DataResponse(1001, e.getMessage());
+        }
+    }
+
+
+    /**
      * 更新圈子
      *
      * @param params
@@ -587,6 +607,5 @@ public class GroupController {
 
         return new DataResponse(1000, "success", result);
     }
-
 
 }
