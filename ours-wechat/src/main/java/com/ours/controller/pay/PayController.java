@@ -138,8 +138,8 @@ public class PayController {
         Map map = PayUtil.doXMLParse(res);
         String return_code = (String) map.get("return_code");//返回状态码
         Map<String, String> result = new HashMap<String, String>();//返回给小程序端需要的参数
-        String prepay_id = null;
         if (return_code == "SUCCESS" || return_code.equals(return_code)) {
+            String prepay_id = null;
             prepay_id = (String) map.get("prepay_id");//返回的预付单信息
             result.put("nonceStr", PayUtil.getRandomStringByLength(32));
             result.put("package", "prepay_id=" + prepay_id);
