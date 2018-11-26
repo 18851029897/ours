@@ -43,6 +43,13 @@ public class PayController {
     @Autowired
     private IUserInfoService userInfoService;
 
+    /**
+     * 统一下单接口
+     *
+     * @param params
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/pay", method = RequestMethod.POST)
     @ResponseBody
     public DataResponse pay(PaymentVO params) throws Exception {
@@ -117,6 +124,12 @@ public class PayController {
     }
 
 
+    /**
+     * 支付回调接口
+     *
+     * @param request
+     * @param response
+     */
     @RequestMapping(value = "/notify")
     public void wxNotify(HttpServletRequest request, HttpServletResponse response) {
         StringBuffer buffer = new StringBuffer();
