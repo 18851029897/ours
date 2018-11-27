@@ -1068,6 +1068,9 @@ public class SqlProvider {
         String sql = new SQL() {{
             UPDATE("user_order");
             if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                SET("trade_no=#{tradeNo}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
                 SET("status=#{status}");
             }
             if (EmptyUtil.isNotEmpty(params.getSuccessTime())) {

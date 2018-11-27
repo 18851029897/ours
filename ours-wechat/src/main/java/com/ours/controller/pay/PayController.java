@@ -195,7 +195,6 @@ public class PayController {
     @RequestMapping(value = "/notify")
     public void wxNotify(HttpServletRequest request, HttpServletResponse response) {
         String key = this.baseSysParamService.findValueByKey(new BaseSysParam("WX_PAY_KEY"));
-        String orderId = null;
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream()));
             String line = null;
@@ -206,10 +205,11 @@ public class PayController {
             br.close();
             //sb为微信返回的xml
             String notityXml = sb.toString();
-            baseLog.info("接收到的报文：" + notityXml);
+            baseLog.info("微信支付回调接收到的报文：" + notityXml);
             String resXml = "";
             Map map = PayUtil.doXMLParse(notityXml);
             String returnCode = (String) map.get("return_code");
+            baseLog.info("微信支付回调响应：" + returnCode);
             if ("SUCCESS".equals(returnCode)) {
                 //验证签名是否正确
                 Map<String, String> validParams = PayUtil.paraFilter(map);  //回调验签时需要去除sign和空值参数
@@ -218,8 +218,16 @@ public class PayController {
                 //根据微信官网的介绍，此处不仅对回调的参数进行验签，还需要对返回的金额与系统订单的金额进行比对等
                 if (sign.equals(map.get("sign"))) {
                     /**此处添加自己的业务逻辑代码start**/
-                    //TODO
+                    //TODO 更新订单状态, 更新用户金额
+                    //商户订单号
+                    String outTradeNo = (String) map.get("out_trade_no");
+                    //微信订单号
+                    String transactionId = (String) map.get("transaction_id");
+                    //成功时间
+                    String timeEnd = (String) map.get("time_end");
 
+                    UserOrder order = new UserOrder(outTradeNo, transactionId, 1, timeEnd, new Date());
+                    this.userOrderService.updateUserOrder(order);
                     /**此处添加自己的业务逻辑代码end**/
                     //通知微信服务器已经支付成功
                     resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>" + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";

@@ -23,7 +23,7 @@ public class UserOrder {
     private BigDecimal payAmount;
     private Integer status;
     private String remark;
-    private Date successTime;
+    private String successTime;
     private Date modifyTime;
     private Date createTime;
 
@@ -149,11 +149,11 @@ public class UserOrder {
 
     @Basic
     @Column(name = "success_time")
-    public Date getSuccessTime() {
+    public String getSuccessTime() {
         return successTime;
     }
 
-    public void setSuccessTime(Date successTime) {
+    public void setSuccessTime(String successTime) {
         this.successTime = successTime;
     }
 
@@ -177,4 +177,14 @@ public class UserOrder {
         this.createTime = createTime;
     }
 
+    public UserOrder() {
+    }
+
+    public UserOrder(String orderNo, String tradeNo, Integer status, String successTime, Date modifyTime) {
+        this.orderNo = orderNo;
+        this.tradeNo = tradeNo;
+        this.status = status;
+        this.successTime = successTime;
+        this.modifyTime = modifyTime;
+    }
 }
