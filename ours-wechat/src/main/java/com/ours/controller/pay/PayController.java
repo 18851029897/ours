@@ -15,6 +15,7 @@ import com.ours.service.base.IBaseSysParamService;
 import com.ours.service.group.IGroupActivityService;
 import com.ours.service.group.IGroupInfoService;
 import com.ours.service.group.IGroupTopicService;
+import com.ours.service.pay.IPayService;
 import com.ours.service.user.IUserInfoService;
 import com.ours.service.user.IUserOrderService;
 import org.slf4j.Logger;
@@ -63,6 +64,9 @@ public class PayController {
 
     @Autowired
     private IUserOrderService userOrderService;
+
+    @Autowired
+    private IPayService payService;
 
     /**
      * 统一下单接口
@@ -225,9 +229,10 @@ public class PayController {
                     String transactionId = (String) map.get("transaction_id");
                     //成功时间
                     String timeEnd = (String) map.get("time_end");
-
+                    //封装对象
                     UserOrder order = new UserOrder(outTradeNo, transactionId, 1, timeEnd, new Date());
-                    this.userOrderService.updateUserOrder(order);
+                    //逻辑操作
+                    this.payService.wxNotify(order);
                     /**此处添加自己的业务逻辑代码end**/
                     //通知微信服务器已经支付成功
                     resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>" + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";

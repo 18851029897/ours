@@ -1086,6 +1086,27 @@ public class SqlProvider {
     }
 
 
+    /**
+     * 查询用户订单
+     *
+     * @param params
+     * @return
+     */
+    public String findUserOrder(UserOrder params) {
+        String sql = new SQL() {{
+            SELECT("*");
+            FROM("user_order");
+            if (EmptyUtil.isNotEmpty(params.getOrderNo())) {
+                WHERE("ORDER_NO=#{orderNo}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                WHERE("USER_ID=#{userId}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
 }
 
 

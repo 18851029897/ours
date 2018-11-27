@@ -24,4 +24,9 @@ public class UserOrderService implements IUserOrderService {
     public Integer updateUserOrder(UserOrder params) {
         return this.userOrderMapper.updateUserOrder(params);
     }
+
+    @Override
+    public UserOrder findUserOrder(UserOrder params) {
+        return this.userOrderMapper.findUserOrder(params);
+    }
 }

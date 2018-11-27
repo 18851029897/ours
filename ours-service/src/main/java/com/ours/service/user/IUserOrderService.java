@@ -11,4 +11,6 @@ public interface IUserOrderService {
 
     Integer updateUserOrder(UserOrder params);
 
+    UserOrder findUserOrder(UserOrder params);
+
 }
