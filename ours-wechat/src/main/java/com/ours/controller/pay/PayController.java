@@ -10,11 +10,13 @@ import com.ours.model.group.GroupActivity;
 import com.ours.model.group.GroupInfo;
 import com.ours.model.group.GroupTopic;
 import com.ours.model.user.UserInfo;
+import com.ours.model.user.UserOrder;
 import com.ours.service.base.IBaseSysParamService;
 import com.ours.service.group.IGroupActivityService;
 import com.ours.service.group.IGroupInfoService;
 import com.ours.service.group.IGroupTopicService;
 import com.ours.service.user.IUserInfoService;
+import com.ours.service.user.IUserOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -58,10 +61,17 @@ public class PayController {
     @Autowired
     private IGroupActivityService groupActivityService;
 
+    @Autowired
+    private IUserOrderService userOrderService;
+
     /**
      * 统一下单接口
      *
-     * @param params
+     * @param request
+     * @param userId
+     * @param body
+     * @param flag
+     * @param id
      * @return
      * @throws Exception
      */
@@ -84,17 +94,15 @@ public class PayController {
 
         //价格
         BigDecimal total_fee = new BigDecimal(0);
-        if (flag.intValue() == 0) {
+        if (flag.intValue() == 1) {
             GroupInfo group = this.groupInfoService.findGroupInfo(new GroupInfo(id));
             total_fee = group.getGroupPrice().multiply(new BigDecimal(100)).setScale(0);
-        } else if (flag.intValue() == 1) {
+        } else if (flag.intValue() == 2) {
             GroupTopic topic = this.groupTopicService.findGroupTopic(new GroupTopic(id));
             total_fee = topic.getTopicPrice().multiply(new BigDecimal(100)).setScale(0);
-            ;
         } else {
             GroupActivity activity = this.groupActivityService.findGroupActivity(new GroupActivity(id));
             total_fee = activity.getActivityPrice().multiply(new BigDecimal(100)).setScale(0);
-            ;
         }
 
         //组装参数，用户生成统一下单接口的签名
@@ -118,7 +126,7 @@ public class PayController {
         String xml = "<xml>" + "<appid>" + appid + "</appid>"
                 + "<body><![CDATA[" + body + "]]></body>"
                 + "<mch_id>" + mchId + "</mch_id>"
-                + "<nonce_str>" + PayUtil.getRandomStringByLength(32) + "</nonce_str>"
+                + "<nonce_str>" + nonce_str + "</nonce_str>"
                 + "<notify_url>" + notifyUrl + "</notify_url>"
                 + "<openid>" + user.getOpenId() + "</openid>"
                 + "<out_trade_no>" + out_trade_no + "</out_trade_no>"
@@ -137,6 +145,7 @@ public class PayController {
         // 将解析结果存储在HashMap中
         Map map = PayUtil.doXMLParse(res);
         String return_code = (String) map.get("return_code");//返回状态码
+        baseLog.info("调试模式_统一下单接口 返回状态码：" + return_code);
         Map<String, String> result = new HashMap<String, String>();//返回给小程序端需要的参数
         if (return_code == "SUCCESS" || return_code.equals(return_code)) {
             String prepay_id = null;
@@ -150,6 +159,27 @@ public class PayController {
             //再次签名，这个签名用于小程序端调用wx.requesetPayment方法
             String paySign = PayUtil.sign(stringSignTemp, key, "utf-8").toUpperCase();
             result.put("paySign", paySign);
+            result.put("prepay_id", prepay_id);
+            result.put("orderNo", out_trade_no);
+
+            //生成预付订单
+            baseLog.info("开始生成预支付订单ing...");
+            UserOrder order = new UserOrder();
+            order.setOrderNo(out_trade_no);
+            order.setUserId(userId);
+            order.setOrderType(flag);
+            if (flag.intValue() == 1) {
+                order.setGroupId(id);
+            } else if (flag.intValue() == 2) {
+                order.setTopicId(id);
+            } else {
+                order.setActivityId(id);
+            }
+            order.setBody(body);
+            order.setPayAmount(total_fee);
+            order.setModifyTime(new Date());
+            order.setCreateTime(new Date());
+            this.userOrderService.saveUserOrder(order);
         }
         result.put("appid", appid);
         return new DataResponse(1000, "success", result);

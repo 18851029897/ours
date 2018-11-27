@@ -7,6 +7,7 @@ import com.ours.common.util.MappingUtil;
 import com.ours.model.base.BaseSysParam;
 import com.ours.model.group.*;
 import com.ours.model.user.UserInfo;
+import com.ours.model.user.UserOrder;
 import com.ours.service.base.IBaseSysParamService;
 import com.ours.service.user.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class LoginController {
 
     public static void main(String args[]) {
 
-        System.out.println(MappingUtil.getResultsStr(GroupActivityJoin.class));
+        System.out.println(MappingUtil.getResultsStr(UserOrder.class));
 
     }
 

@@ -5,6 +5,7 @@ import com.ours.model.base.BaseSysParam;
 import com.ours.model.group.*;
 import com.ours.model.user.UserGroup;
 import com.ours.model.user.UserInfo;
+import com.ours.model.user.UserOrder;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1004,6 +1005,83 @@ public class SqlProvider {
         baseLog.info(sql);
         return sql;
     }
+
+
+    /**
+     * 保存用户订单
+     *
+     * @param params
+     * @return
+     */
+    public String saveUserOrder(UserOrder params) {
+        String sql = new SQL() {{
+            INSERT_INTO("user_order");
+            if (EmptyUtil.isNotEmpty(params.getOrderNo())) {
+                VALUES("order_no", "#{orderNo}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTradeNo())) {
+                VALUES("trade_no", "#{tradeNo}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getUserId())) {
+                VALUES("user_id", "#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getOrderType())) {
+                VALUES("order_type", "#{orderType}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                VALUES("group_id", "#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicId())) {
+                VALUES("topic_id", "#{topicId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityId())) {
+                VALUES("activity_id", "#{activityId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getBody())) {
+                VALUES("body", "#{body}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getPayAmount())) {
+                VALUES("pay_amount", "#{payAmount}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getRemark())) {
+                VALUES("remark", "#{activityId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                VALUES("modify_time", "#{createTime}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getCreateTime())) {
+                VALUES("create_time", "#{createTime}");
+            }
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
+
+    /**
+     * 更新用户订单
+     *
+     * @param params
+     * @return
+     */
+    public String updateUserOrder(UserOrder params) {
+        String sql = new SQL() {{
+            UPDATE("user_order");
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                SET("status=#{status}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getSuccessTime())) {
+                SET("success_time=#{successTime}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getModifyTime())) {
+                SET("modify_time=#{modifyTime}");
+            }
+            WHERE("order_no=#{orderNo}");
+        }}.toString();
+        baseLog.info(sql);
+        return sql;
+    }
+
 
 }
 
