@@ -843,6 +843,9 @@ public class SqlProvider {
             if (EmptyUtil.isNotEmpty(params.getActivityRead())) {
                 VALUES("activity_read", "#{activityRead}");
             }
+            if (EmptyUtil.isNotEmpty(params.getActivityCount())) {
+                VALUES("activity_count", "#{activityCount}");
+            }
             if (EmptyUtil.isNotEmpty(params.getIsDel())) {
                 VALUES("is_del", "#{isDel}");
             }
@@ -1101,6 +1104,18 @@ public class SqlProvider {
             }
             if (EmptyUtil.isNotEmpty(params.getUserId())) {
                 WHERE("USER_ID=#{userId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getGroupId())) {
+                WHERE("GROUP_ID=#{groupId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getTopicId())) {
+                WHERE("TOPIC_ID=#{topicId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getActivityId())) {
+                WHERE("ACTIVITY_ID=#{activityId}");
+            }
+            if (EmptyUtil.isNotEmpty(params.getStatus())) {
+                WHERE("STATUS=#{status}");
             }
         }}.toString();
         baseLog.info(sql);
